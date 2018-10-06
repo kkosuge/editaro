@@ -5,7 +5,7 @@ import * as path from 'path'
 import { format as formatUrl } from 'url'
 import {
   createProtocol,
-  installVueDevtools
+  installVueDevtools,
 } from 'vue-cli-plugin-electron-builder/lib'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 if (isDevelopment) {
@@ -18,7 +18,7 @@ let mainWindow: any
 
 // Standard scheme must be registered before the app is ready
 protocol.registerStandardSchemes(['app'], { secure: true })
-function createMainWindow () {
+function createMainWindow() {
   const window = new BrowserWindow()
 
   if (isDevelopment) {
@@ -32,7 +32,7 @@ function createMainWindow () {
       formatUrl({
         pathname: path.join(__dirname, 'index.html'),
         protocol: 'file',
-        slashes: true
+        slashes: true,
       })
     )
   }
