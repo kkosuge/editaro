@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain } from 'electron'
 import * as path from 'path'
 import { format as formatUrl } from 'url'
 import {
@@ -23,6 +23,7 @@ function createMainWindow() {
     width: 600,
     height: 400,
     titleBarStyle: 'hidden',
+    alwaysOnTop: false,
   })
 
   if (isDevelopment) {
@@ -77,4 +78,8 @@ app.on('ready', async () => {
     await installVueDevtools()
   }
   mainWindow = createMainWindow()
+})
+
+ipcMain.on('alwaysOnTop', (event: any, arg: boolean) => {
+  mainWindow.setAlwaysOnTop(arg)
 })

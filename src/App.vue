@@ -8,24 +8,34 @@
     </div>
     <div class='nav-bar'>
       <div class='nav-bar-item'>
-        {{ this.textLength }}
+        Count: {{ this.textLength }}
       </div>
-      <div class='nav-bar-item'>
+      <div class='nav-bar-item nav-bar-item-select'>
         <select v-model='language' @change='changeLanguage'>
           <option v-for='lang in languages' :value='lang.value' :key='lang.value'>
             {{ lang.text }}
           </option>
         </select>
       </div>
+      <div class='nav-bar-item nav-bar-item-checkbox'>
+        Always on top:
+        <div class='pretty p-default p-curve'>
+          <input type="checkbox" id="checkbox" v-model="alwaysOnTop" @change='changeAlwaysOnTop'>
+          <div class="state">
+            <label for="checkbox"></label>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import { ipcRenderer } from 'electron'
 import { Component, Vue } from 'vue-property-decorator'
 import * as monaco from 'monaco-editor'
 import languages from './lib/languages'
-import './assets/style.sass'
+import './assets/style.scss'
 
 @Component
 export default class App extends Vue {
@@ -35,6 +45,7 @@ export default class App extends Vue {
   languages = languages
   language = 'markdown'
   textLength = 0
+  alwaysOnTop = false
 
   editorOption: monaco.editor.IEditorConstructionOptions = {
     theme: 'vs-dark',
@@ -65,6 +76,10 @@ export default class App extends Vue {
     if (this.editorModel) {
       monaco.editor.setModelLanguage(this.editorModel, this.language)
     }
+  }
+
+  changeAlwaysOnTop() {
+    ipcRenderer.send('alwaysOnTop', this.alwaysOnTop)
   }
 }
 </script>
@@ -115,7 +130,15 @@ $nav-bar-color: #c1c1c1
   color: $nav-bar-color
   line-height: 22px
   .nav-bar-item
-    margin-left: 6px
+    margin-left: 10px
+  .pretty
+    padding-top: 4px
+  .pretty .state label:before
+    top: 3px
+  .pretty .state label:after
+    top: 3px
+  .nav-bar-item-checkbox
+    margin-left: 2px
 select
   -webkit-appearance: none
   appearance: none
