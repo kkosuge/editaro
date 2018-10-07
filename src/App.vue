@@ -55,19 +55,25 @@ export default class App extends Vue {
     fontSize: 14,
     language: this.language,
     minimap: {
-      enabled: false
-    }
+      enabled: false,
+    },
   }
 
   mounted() {
+    let defaultText = localStorage.getItem('text')
+    if (!defaultText) {
+      defaultText = ''
+    }
     this.el = this.$refs.editor as HTMLElement
     this.editor = monaco.editor.create(this.el, this.editorOption)
-    this.editorModel = monaco.editor.createModel('', this.language)
+    this.editorModel = monaco.editor.createModel(defaultText, this.language)
     this.editor.setModel(this.editorModel)
 
     this.editorModel.onDidChangeContent(() => {
       if (this.editorModel) {
-        this.textLength = Array.from(this.editorModel.getValue()).length
+        const text = this.editorModel.getValue()
+        localStorage.setItem('text', text)
+        this.textLength = Array.from(text).length
       }
     })
   }
