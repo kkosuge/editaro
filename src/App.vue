@@ -8,6 +8,9 @@
     </div>
     <div class='nav-bar'>
       <div class='nav-bar-item'>
+        {{ this.textLength }}
+      </div>
+      <div class='nav-bar-item'>
         <select v-model='language' @change='changeLanguage'>
           <option v-for='lang in languages' :value='lang.value' :key='lang.value'>
             {{ lang.text }}
@@ -31,6 +34,7 @@ export default class App extends Vue {
   el?: HTMLElement
   languages = languages
   language = 'markdown'
+  textLength = 0
 
   editorOption: monaco.editor.IEditorConstructionOptions = {
     theme: 'vs-dark',
@@ -49,6 +53,12 @@ export default class App extends Vue {
     this.editor = monaco.editor.create(this.el, this.editorOption)
     this.editorModel = monaco.editor.createModel('', this.language)
     this.editor.setModel(this.editorModel)
+
+    this.editorModel.onDidChangeContent(() => {
+      if (this.editorModel) {
+        this.textLength = Array.from(this.editorModel.getValue()).length
+      }
+    })
   }
 
   changeLanguage() {
@@ -62,6 +72,7 @@ export default class App extends Vue {
 <style lang='sass'>
 $base-color: #1e1e1e
 $border-color: #454545
+$nav-bar-color: #c1c1c1
 #app
   font-family: 'Avenir', Helvetica, Arial, sans-serif
   -webkit-font-smoothing: antialiased
@@ -101,6 +112,10 @@ $border-color: #454545
   display: flex
   justify-content: flex-end
   font-size: 12px
+  color: $nav-bar-color
+  line-height: 22px
+  .nav-bar-item
+    margin-left: 6px
 select
   -webkit-appearance: none
   appearance: none
@@ -109,8 +124,7 @@ select
   margin: 0
   padding: 2px 4px
   background: none transparent
-  vertical-align: middle
-  color: $border-color
+  color: $nav-bar-color
   border-radius: 4px
   box-sizing: content-box
 </style>
