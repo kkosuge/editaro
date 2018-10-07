@@ -11,6 +11,9 @@
     "serve:electron": "vue-cli-service serve:electron"
   },
   "dependencies": {
+    "monaco-editor": "0.14.3",
+    "node-sass": "^4.9.3",
+    "sass-loader": "^7.1.0",
     "vue": "^2.5.17",
     "vue-class-component": "^6.0.0",
     "vue-property-decorator": "^7.0.0"

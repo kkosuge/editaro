@@ -19,12 +19,16 @@ let mainWindow: any
 // Standard scheme must be registered before the app is ready
 protocol.registerStandardSchemes(['app'], { secure: true })
 function createMainWindow() {
-  const window = new BrowserWindow()
+  const window = new BrowserWindow({
+    width: 600,
+    height: 400,
+    titleBarStyle: 'hidden',
+  })
 
   if (isDevelopment) {
     // Load the url of the dev server if in development mode
     window.loadURL(process.env.WEBPACK_DEV_SERVER_URL as string)
-    if (!process.env.IS_TEST) window.webContents.openDevTools()
+    //if (!process.env.IS_TEST) window.webContents.openDevTools()
   } else {
     createProtocol('app')
     //   Load the index.html when not in development
