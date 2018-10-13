@@ -69,6 +69,7 @@ export default class App extends Vue {
     this.editor = monaco.editor.create(this.el, this.editorOption)
     this.editorModel = monaco.editor.createModel(defaultText, this.language)
     this.editor.setModel(this.editorModel)
+    this.editor.focus()
 
     this.editorModel.onDidChangeContent(() => {
       if (this.editorModel) {
