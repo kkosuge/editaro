@@ -76,6 +76,15 @@ export default class App extends Vue {
         this.textLength = Array.from(text).length
       }
     })
+
+    document.addEventListener('copy', e => {
+      if (this.editor && this.editorModel) {
+        const editorSelection = this.editor.getSelection()
+        const selectedText = this.editorModel.getValueInRange(editorSelection)
+        ipcRenderer.send('copy', selectedText)
+      }
+      e.preventDefault()
+    })
   }
 
   changeLanguage() {

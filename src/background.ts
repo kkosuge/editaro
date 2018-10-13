@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, ipcMain } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain, clipboard } from 'electron'
 import * as path from 'path'
 import { format as formatUrl } from 'url'
 import {
@@ -82,4 +82,12 @@ app.on('ready', async () => {
 
 ipcMain.on('alwaysOnTop', (event: any, arg: boolean) => {
   mainWindow.setAlwaysOnTop(arg)
+})
+
+// Command|Ctrl + C でのコピー時に text/html のデータをクリップボードに書き込まないようにしたいため
+// setTimeout を挟まないと、レンダラープロセス側のデータが採用されてしまう
+ipcMain.on('copy', (event: any, arg: string) => {
+  setTimeout(() => {
+    clipboard.writeText(arg)
+  }, 200)
 })
