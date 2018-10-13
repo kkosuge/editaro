@@ -54,6 +54,7 @@ export default class App extends Vue {
     autoIndent: true,
     fontSize: 14,
     language: this.language,
+    wordWrap: 'on',
     minimap: {
       enabled: false,
     },
