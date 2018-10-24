@@ -1,28 +1,35 @@
 <template>
-  <div id="app">
+  <div id='app'>
     <div class='draggable-title-bar'></div>
     <div class='main'>
-      <div class="editor-wrapper">
+      <div class='editor-wrapper'>
         <div id='editor' ref='editor'></div>
       </div>
     </div>
     <div class='nav-bar'>
-      <div class='nav-bar-item'>
-        Count: {{ this.textLength }}
+      <div class='nav-bar-left'>
+        <div class='nav-bar-item'>
+          Characters: {{ this.textLength }}
+        </div>
+        <div class='nav-bar-item'>
+          Lines: {{ this.lineCount }}
+        </div>
       </div>
-      <div class='nav-bar-item nav-bar-item-select'>
-        <select v-model='language' @change='changeLanguage'>
-          <option v-for='lang in languages' :value='lang.value' :key='lang.value'>
-            {{ lang.text }}
-          </option>
-        </select>
-      </div>
-      <div class='nav-bar-item nav-bar-item-checkbox'>
-        Always on top:
-        <div class='pretty p-default p-curve'>
-          <input type="checkbox" id="checkbox" v-model="alwaysOnTop" @change='changeAlwaysOnTop'>
-          <div class="state">
-            <label for="checkbox"></label>
+      <div class='nav-bar-right'>
+        <div class='nav-bar-item nav-bar-item-select'>
+          <select v-model='language' @change='changeLanguage'>
+            <option v-for='lang in languages' :value='lang.value' :key='lang.value'>
+              {{ lang.text }}
+            </option>
+          </select>
+        </div>
+        <div class='nav-bar-item nav-bar-item-checkbox'>
+          <span @click='toggleAlwaysOnTop'>Always on top:</span>
+          <div class='pretty p-default p-curve'>
+            <input type='checkbox' id='checkbox' v-model='alwaysOnTop' @change='changeAlwaysOnTop'>
+            <div class='state'>
+              <label for='checkbox'></label>
+            </div>
           </div>
         </div>
       </div>
@@ -34,6 +41,7 @@
 import { ipcRenderer } from 'electron'
 import { Component, Vue } from 'vue-property-decorator'
 import * as monaco from 'monaco-editor'
+import './lib/theme/jj-dark'
 import languages from './lib/languages'
 import './assets/style.scss'
 
@@ -45,19 +53,21 @@ export default class App extends Vue {
   languages = languages
   language = 'markdown'
   textLength = 0
+  lineCount = 1
   alwaysOnTop = false
 
   editorOption: monaco.editor.IEditorConstructionOptions = {
-    theme: 'vs-dark',
+    theme: 'jj-dark',
     lineNumbers: 'off',
     automaticLayout: true,
     autoIndent: true,
-    fontSize: 14,
+    fontSize: 13,
     language: this.language,
     wordWrap: 'on',
+    lineDecorationsWidth: 0,
     minimap: {
-      enabled: false,
-    },
+      enabled: false
+    }
   }
 
   mounted() {
@@ -71,13 +81,8 @@ export default class App extends Vue {
     this.editor.setModel(this.editorModel)
     this.editor.focus()
 
-    this.editorModel.onDidChangeContent(() => {
-      if (this.editorModel) {
-        const text = this.editorModel.getValue()
-        localStorage.setItem('text', text)
-        this.textLength = Array.from(text).length
-      }
-    })
+    this.updateEditorModelData()
+    this.editorModel.onDidChangeContent(() => this.updateEditorModelData())
 
     document.addEventListener('copy', e => {
       if (this.editor && this.editorModel) {
@@ -89,6 +94,15 @@ export default class App extends Vue {
     })
   }
 
+  updateEditorModelData() {
+    if (this.editorModel) {
+      const text = this.editorModel.getValue()
+      localStorage.setItem('text', text)
+      this.textLength = Array.from(text).length
+      this.lineCount = this.editorModel.getLineCount()
+    }
+  }
+
   changeLanguage() {
     if (this.editorModel) {
       monaco.editor.setModelLanguage(this.editorModel, this.language)
@@ -96,6 +110,11 @@ export default class App extends Vue {
   }
 
   changeAlwaysOnTop() {
+    ipcRenderer.send('alwaysOnTop', this.alwaysOnTop)
+  }
+
+  toggleAlwaysOnTop() {
+    this.alwaysOnTop = !this.alwaysOnTop
     ipcRenderer.send('alwaysOnTop', this.alwaysOnTop)
   }
 }
@@ -119,7 +138,7 @@ $nav-bar-color: #c1c1c1
   left: 0
   height: 22px
   width: 100%
-  background: $base-color
+  background: #333
   -webkit-app-region: drag
 .main
   position: relative
@@ -138,24 +157,33 @@ $nav-bar-color: #c1c1c1
   width: 100%
   height: 100%
 #editor
-  padding-top: 30px
-  height: calc(100vh - 84px)
+  padding-top: 22px
+  height: calc(100vh - 67px)
 .nav-bar
   display: flex
   justify-content: flex-end
   font-size: 12px
   color: $nav-bar-color
   line-height: 22px
-  .nav-bar-item
+  &-left
+    margin-left: 6px
+    display: flex
+  &-right
+    margin-left: auto
+    display: flex
+  &-item
     margin-left: 10px
+  &-item-checkbox
+    margin-left: 2px
+    cursor: pointer
+    user-select: none
   .pretty
     padding-top: 4px
+    margin-left: 4px
   .pretty .state label:before
     top: 3px
   .pretty .state label:after
     top: 3px
-  .nav-bar-item-checkbox
-    margin-left: 2px
 select
   -webkit-appearance: none
   appearance: none
