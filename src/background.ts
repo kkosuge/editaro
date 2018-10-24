@@ -1,6 +1,13 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, ipcMain, clipboard } from 'electron'
+import {
+  app,
+  protocol,
+  BrowserWindow,
+  ipcMain,
+  clipboard,
+  shell,
+} from 'electron'
 import * as path from 'path'
 import { format as formatUrl } from 'url'
 import {
@@ -51,6 +58,11 @@ function createMainWindow() {
     setImmediate(() => {
       window.focus()
     })
+  })
+
+  window.webContents.on('new-window', (event, url) => {
+    event.preventDefault()
+    shell.openExternal(url)
   })
 
   return window
