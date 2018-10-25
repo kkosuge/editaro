@@ -1,6 +1,6 @@
 import * as monaco from 'monaco-editor'
 
-monaco.editor.defineTheme('jj-dark', {
+monaco.editor.defineTheme('dark', {
   base: 'vs-dark',
   inherit: true,
   rules: [],

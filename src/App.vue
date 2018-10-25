@@ -1,5 +1,5 @@
 <template>
-  <div id='app'>
+  <div id='app' :class='`theme-${this.theme}`'>
     <div class='draggable-title-bar'></div>
     <div class='main'>
       <div class='editor-wrapper'>
@@ -16,6 +16,13 @@
         </div>
       </div>
       <div class='nav-bar-right'>
+        <div class='nav-bar-item nav-bar-item-select'>
+          <select v-model='theme' @change='changeTheme'>
+            <option v-for='theme in themes' :value='theme.value' :key='theme.value'>
+              {{ theme.text }}
+            </option>
+          </select>
+        </div>
         <div class='nav-bar-item nav-bar-item-select'>
           <select v-model='language' @change='changeLanguage'>
             <option v-for='lang in languages' :value='lang.value' :key='lang.value'>
@@ -41,7 +48,10 @@
 import { ipcRenderer } from 'electron'
 import { Component, Vue } from 'vue-property-decorator'
 import * as monaco from 'monaco-editor'
-import './lib/theme/jj-dark'
+import './lib/theme/dark'
+import './lib/theme/light'
+import './lib/theme/vscode'
+import themes from './lib/theme/themes'
 import languages from './lib/languages'
 import './assets/style.scss'
 
@@ -53,11 +63,13 @@ export default class App extends Vue {
   languages = languages
   language = 'markdown'
   textLength = 0
+  theme = 'vscode'
+  themes = themes
   lineCount = 1
   alwaysOnTop = false
 
   editorOption: monaco.editor.IEditorConstructionOptions = {
-    theme: 'jj-dark',
+    theme: this.theme,
     lineNumbers: 'off',
     automaticLayout: true,
     autoIndent: true,
@@ -66,8 +78,8 @@ export default class App extends Vue {
     wordWrap: 'on',
     lineDecorationsWidth: 0,
     minimap: {
-      enabled: false
-    }
+      enabled: false,
+    },
   }
 
   mounted() {
@@ -109,6 +121,10 @@ export default class App extends Vue {
     }
   }
 
+  changeTheme() {
+    monaco.editor.setTheme(this.theme)
+  }
+
   changeAlwaysOnTop() {
     ipcRenderer.send('alwaysOnTop', this.alwaysOnTop)
   }
@@ -119,80 +135,3 @@ export default class App extends Vue {
   }
 }
 </script>
-
-<style lang='sass'>
-$base-color: #1e1e1e
-$border-color: #454545
-$nav-bar-color: #c1c1c1
-#app
-  font-family: 'Avenir', Helvetica, Arial, sans-serif
-  -webkit-font-smoothing: antialiased
-  -moz-osx-font-smoothing: grayscale
-  color: #2c3e50
-  height: 100%
-  text-align: left
-.draggable-title-bar
-  z-index: 1000
-  position: fixed
-  top: 0
-  left: 0
-  height: 22px
-  width: 100%
-  background: #333
-  -webkit-app-region: drag
-.main
-  position: relative
-  height: 100%
-.nav-bar
-  z-index: 1000
-  position: fixed
-  bottom: 0
-  left: 0
-  height: 22px
-  width: 100%
-  background: $base-color
-  border-top: 1px solid $border-color
-  -webkit-app-region: drag
-.editor-wrapper
-  width: 100%
-  height: 100%
-#editor
-  padding-top: 22px
-  height: calc(100vh - 67px)
-.nav-bar
-  display: flex
-  justify-content: flex-end
-  font-size: 12px
-  color: $nav-bar-color
-  line-height: 22px
-  &-left
-    margin-left: 6px
-    display: flex
-  &-right
-    margin-left: auto
-    display: flex
-  &-item
-    margin-left: 10px
-  &-item-checkbox
-    margin-left: 2px
-    cursor: pointer
-    user-select: none
-  .pretty
-    padding-top: 4px
-    margin-left: 4px
-  .pretty .state label:before
-    top: 3px
-  .pretty .state label:after
-    top: 3px
-select
-  -webkit-appearance: none
-  appearance: none
-  border-radius: 0
-  border: 0
-  margin: 0
-  padding: 2px 4px
-  background: none transparent
-  color: $nav-bar-color
-  border-radius: 4px
-  box-sizing: content-box
-</style>

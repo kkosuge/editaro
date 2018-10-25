@@ -1,0 +1,55 @@
+$theme-colors: (title-bar: (light: linear-gradient(to top, #cccccc 0%, #d6d6d6 1px, #ebebeb 100%), dark: #333), border: (light: #ddd, dark: #454545), nav-bar: (light: linear-gradient(to top, #cccccc 0%, #d6d6d6 1px, #ebebeb 100%), dark: #333, vscode: #0077d5), nav-bar-text: (light: #333, dark: #c1c1c1, vscode: #fff));
+
+@function theme-color($key: "base", $variant: "base") {
+  $map: map-get($theme-colors, $key);
+
+  @return map-get($map, $variant);
+}
+
+.theme-light {
+  .draggable-title-bar {
+    background: theme-color(title-bar, light);
+  }
+
+  .nav-bar {
+    color: theme-color(nav-bar-text, light);
+    background: theme-color(nav-bar, light);
+    border-top: 1px solid theme-color(border, light);
+
+    select {
+      color: theme-color(nav-bar-text, light);
+    }
+  }
+}
+
+.theme-dark {
+  .draggable-title-bar {
+    background: theme-color(title-bar, dark);
+  }
+
+  .nav-bar {
+    color: theme-color(nav-bar-text, dark);
+    background: theme-color(nav-bar, dark);
+    border-top: 1px solid theme-color(border, dark);
+
+    select {
+      color: theme-color(nav-bar-text, dark);
+    }
+  }
+}
+
+.theme-vscode {
+  .draggable-title-bar {
+    background: theme-color(title-bar, dark);
+  }
+
+  .nav-bar {
+    color: theme-color(nav-bar-text, vscode);
+    background: theme-color(nav-bar, vscode);
+    border-top: 1px solid theme-color(border, dark);
+
+    select {
+      color: theme-color(nav-bar-text, vscode);
+    }
+  }
+}
