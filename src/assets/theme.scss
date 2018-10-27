@@ -1,4 +1,25 @@
-$theme-colors: (title-bar: (light: linear-gradient(to top, #cccccc 0%, #d6d6d6 1px, #ebebeb 100%), dark: #333), border: (light: #ddd, dark: #454545), nav-bar: (light: linear-gradient(to top, #cccccc 0%, #d6d6d6 1px, #ebebeb 100%), dark: #333, vscode: #0077d5), nav-bar-text: (light: #333, dark: #c1c1c1, vscode: #fff));
+$theme-colors: (
+  title-bar: (
+    light: linear-gradient(to top, #cccccc 0%, #d6d6d6 1px, #ebebeb 100%),
+    dark: #333
+  ),
+  border: (
+    light: #ddd,
+    dark: #454545
+  ),
+  nav-bar: (
+    light: linear-gradient(to top, #cccccc 0%, #d6d6d6 1px, #ebebeb 100%),
+    dark: #333,
+    vscode: #0077d5,
+    dark-grad: linear-gradient(to right, rgb(84, 51, 255), rgb(0, 171, 255), rgb(48, 217, 239)),
+    light-grad: linear-gradient(to right, rgb(84, 51, 255), rgb(0, 171, 255), rgb(48, 217, 239))
+  ),
+  nav-bar-text: (
+    light: #333,
+    dark: #c1c1c1,
+    vscode: #fff
+  )
+);
 
 @function theme-color($key: "base", $variant: "base") {
   $map: map-get($theme-colors, $key);
@@ -50,6 +71,38 @@ $theme-colors: (title-bar: (light: linear-gradient(to top, #cccccc 0%, #d6d6d6 1
 
     select {
       color: theme-color(nav-bar-text, vscode);
+    }
+  }
+}
+
+.theme-dark-grad {
+  .draggable-title-bar {
+    background: theme-color(title-bar, dark);
+  }
+
+  .nav-bar {
+    color: theme-color(nav-bar-text, vscode);
+    background: theme-color(nav-bar, dark-grad);
+    border-top: 1px solid theme-color(border, dark);
+
+    select {
+      color: theme-color(nav-bar-text, vscode);
+    }
+  }
+}
+
+.theme-light-grad {
+  .draggable-title-bar {
+    background: theme-color(title-bar, light);
+  }
+
+  .nav-bar {
+    color: theme-color(nav-bar-text, dark);
+    background: theme-color(nav-bar, light-grad);
+    border-top: 1px solid theme-color(border, light);
+
+    select {
+      color: theme-color(nav-bar-text, dark);
     }
   }
 }

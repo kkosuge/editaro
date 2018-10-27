@@ -51,6 +51,8 @@ import * as monaco from 'monaco-editor'
 import './lib/theme/dark'
 import './lib/theme/light'
 import './lib/theme/vscode'
+import './lib/theme/dark-grad'
+import './lib/theme/light-grad'
 import themes from './lib/theme/themes'
 import languages from './lib/languages'
 import './assets/style.scss'
@@ -63,7 +65,7 @@ export default class App extends Vue {
   languages = languages
   language = 'markdown'
   textLength = 0
-  theme = 'vscode'
+  theme = 'dark-grad'
   themes = themes
   lineCount = 1
   alwaysOnTop = false
