@@ -70,27 +70,15 @@ export default class App extends Vue {
   lineCount = 1
   alwaysOnTop = false
 
-  editorOption: monaco.editor.IEditorConstructionOptions = {
-    theme: this.theme,
-    lineNumbers: 'off',
-    automaticLayout: true,
-    autoIndent: true,
-    fontSize: 13,
-    language: this.language,
-    wordWrap: 'on',
-    lineDecorationsWidth: 0,
-    minimap: {
-      enabled: false,
-    },
-  }
-
   mounted() {
+    this.loadLocalOptions()
     let defaultText = localStorage.getItem('text')
     if (!defaultText) {
       defaultText = ''
     }
+
     this.el = this.$refs.editor as HTMLElement
-    this.editor = monaco.editor.create(this.el, this.editorOption)
+    this.editor = monaco.editor.create(this.el, this.defaultEditorOption())
     this.editorModel = monaco.editor.createModel(defaultText, this.language)
     this.editor.setModel(this.editorModel)
     this.editor.focus()
@@ -108,6 +96,34 @@ export default class App extends Vue {
     })
   }
 
+  loadLocalOptions() {
+    const localTheme = localStorage.getItem('theme')
+    if (localTheme) {
+      this.theme = localTheme
+    }
+
+    const localLanguage = localStorage.getItem('language')
+    if (localLanguage) {
+      this.language = localLanguage
+    }
+  }
+
+  defaultEditorOption(): monaco.editor.IEditorConstructionOptions {
+    return {
+      theme: this.theme,
+      lineNumbers: 'off',
+      automaticLayout: true,
+      autoIndent: true,
+      fontSize: 13,
+      language: this.language,
+      wordWrap: 'on',
+      lineDecorationsWidth: 0,
+      minimap: {
+        enabled: false,
+      },
+    }
+  }
+
   updateEditorModelData() {
     if (this.editorModel) {
       const text = this.editorModel.getValue()
@@ -120,11 +136,13 @@ export default class App extends Vue {
   changeLanguage() {
     if (this.editorModel) {
       monaco.editor.setModelLanguage(this.editorModel, this.language)
+      localStorage.setItem('language', this.language)
     }
   }
 
   changeTheme() {
     monaco.editor.setTheme(this.theme)
+    localStorage.setItem('theme', this.theme)
   }
 
   changeAlwaysOnTop() {
