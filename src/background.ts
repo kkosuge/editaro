@@ -14,12 +14,13 @@ import {
   createProtocol,
   installVueDevtools,
 } from 'vue-cli-plugin-electron-builder/lib'
+import './updator'
+
 const isDevelopment = process.env.NODE_ENV !== 'production'
 if (isDevelopment) {
   // Don't load any native (external) modules until the following line is run:
   require('module').globalPaths.push(process.env.NODE_MODULES_PATH)
 }
-
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
 let mainWindow: any
 
