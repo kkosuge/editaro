@@ -18,6 +18,16 @@ $theme-colors: (
     light: #333,
     dark: #c1c1c1,
     vscode: #fff
+  ),
+  preferences: (
+    light: #fff,
+    dark: #222,
+    vscode: #222
+  ),
+  preferences-text: (
+    light: #333,
+    dark: #fff,
+    vscode: #fff
   )
 );
 
@@ -41,6 +51,19 @@ $theme-colors: (
       color: theme-color(nav-bar-text, light);
     }
   }
+
+  .preferences {
+    background-color: theme-color(preferences, light);
+    color: theme-color(preferences-text, light);
+  }
+
+  .vim-status-bar {
+    color: theme-color(nav-bar-text, light);
+
+    input {
+      color: theme-color(nav-bar-text, light);
+    }
+  }
 }
 
 .theme-dark {
@@ -57,7 +80,26 @@ $theme-colors: (
       color: theme-color(nav-bar-text, dark);
     }
   }
+
+  .preferences {
+    background-color: theme-color(preferences, dark);
+    color: theme-color(preferences-text, dark);
+  }
+
+  .close:before,
+  .close:after {
+    background-color: theme-color(preferences-text, dark);
+  }
+
+  .vim-status-bar {
+    color: theme-color(nav-bar-text, dark);
+
+    input {
+      color: theme-color(nav-bar-text, dark);
+    }
+  }
 }
+
 
 .theme-vscode {
   .draggable-title-bar {
@@ -70,6 +112,24 @@ $theme-colors: (
     border-top: 1px solid theme-color(border, dark);
 
     select {
+      color: theme-color(nav-bar-text, vscode);
+    }
+  }
+
+  .preferences {
+    background-color: theme-color(preferences, vscode);
+    color: theme-color(preferences-text, vscode);
+  }
+
+  .close:before,
+  .close:after {
+    background-color: theme-color(preferences-text, vscode);
+  }
+
+  .vim-status-bar {
+    color: theme-color(nav-bar-text, vscode);
+
+    input {
       color: theme-color(nav-bar-text, vscode);
     }
   }
@@ -89,6 +149,24 @@ $theme-colors: (
       color: theme-color(nav-bar-text, vscode);
     }
   }
+
+  .preferences {
+    background-color: theme-color(preferences, dark);
+    color: theme-color(preferences-text, dark);
+  }
+
+  .close:before,
+  .close:after {
+    background-color: theme-color(preferences-text, dark);
+  }
+
+  .vim-status-bar {
+    color: theme-color(nav-bar-text, vscode);
+
+    input {
+      color: theme-color(nav-bar-text, vscode);
+    }
+  }
 }
 
 .theme-light-grad {
@@ -102,6 +180,19 @@ $theme-colors: (
     border-top: 1px solid theme-color(border, light);
 
     select {
+      color: theme-color(nav-bar-text, dark);
+    }
+  }
+
+  .preferences {
+    background-color: theme-color(preferences, light);
+    color: theme-color(preferences-text, light);
+  }
+
+  .vim-status-bar {
+    color: theme-color(nav-bar-text, dark);
+
+    input {
       color: theme-color(nav-bar-text, dark);
     }
   }

@@ -5645,9 +5645,15 @@ mkdirp@0.5.1, mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdi
   dependencies:
     minimist "0.0.8"
 
-monaco-editor@0.14.3:
+monaco-editor@0.14.3, monaco-editor@^0.14.0:
   version "0.14.3"
   resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.14.3.tgz#7cc4a4096a3821f52fea9b10489b527ef3034e22"
+
+monaco-vim@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/monaco-vim/-/monaco-vim-0.0.7.tgz#7aea8c0e123f8de95830f736ce9cf5d075b6a636"
+  dependencies:
+    monaco-editor "^0.14.0"
 
 move-concurrently@^1.0.1:
   version "1.0.1"
