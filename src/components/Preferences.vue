@@ -5,9 +5,9 @@
       <a href="#" class="close" @click.prevent="close"></a>
     </div>
     <div class='pretty p-default p-curve'>
-      <input type='checkbox' id='checkbox' v-model='vimModeEnabled'>
+      <input type='checkbox' id='vim-mode-checkbox' v-model='vimModeEnabled'>
       <div class='state'>
-        <label for='checkbox'>Vim mode</label>
+        <label for='vim-mode-checkbox'>Vim mode</label>
       </div>
     </div>
   </div>
