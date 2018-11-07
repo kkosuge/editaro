@@ -17,7 +17,7 @@ export interface SharedState {
 }
 
 const state: SharedState = {
-  vimModeEnabled: true,
+  vimModeEnabled: false,
   showPreferences: false,
 }
 
