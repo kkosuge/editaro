@@ -1,4 +1,5 @@
 function get<T extends any>(key: string, defaultValue: T): T
+function get<T extends any>(key: string): T | undefined
 function get<T extends any>(key: string, defaultValue?: T): T | undefined {
   try {
     const item = localStorage.getItem(key)
