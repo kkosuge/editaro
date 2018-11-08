@@ -8,7 +8,7 @@ function get<T extends any>(key: string, defaultValue?: T): T | undefined {
 }
 
 function set(key: string, value: any) {
-  localStorage.setItem(key, value)
+  localStorage.setItem(key, JSON.stringify(value))
 }
 
 export interface SharedState {
