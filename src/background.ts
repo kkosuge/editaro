@@ -71,23 +71,59 @@ function createMainWindow() {
   const menuTemplate: any[] = []
 
   if (process.platform === 'darwin') {
-    menuTemplate.push({
-      label: app.getName(),
-      submenu: [
-        {
-          label: 'Preferences',
-          accelerator: 'CmdOrCtrl+,',
-          click: () => {
-            if (mainWindow)
-              mainWindow.webContents.send('preferences')
-          }
-        }, {
-          type: 'separator'
-        }, {
-          role: 'quit'
-        }
-      ]
-    })
+    menuTemplate.push(
+      {
+        label: app.getName(),
+        submenu: [
+          {
+            label: 'Preferences',
+            accelerator: 'CmdOrCtrl+,',
+            click: () => {
+              if (mainWindow) mainWindow.webContents.send('preferences')
+            },
+          },
+          {
+            type: 'separator',
+          },
+          {
+            role: 'quit',
+          },
+        ],
+      },
+      {
+        label: 'View',
+        submenu: [
+          {
+            label: 'Reload',
+            accelerator: 'Command+R',
+            click: function() {
+              mainWindow.reload()
+            },
+          },
+          {
+            label: 'Close',
+            accelerator: 'Command+W',
+            click: function() {
+              mainWindow.close()
+            },
+          },
+          {
+            label: 'Toggle Full Screen',
+            accelerator: 'Ctrl+Command+F',
+            click: function() {
+              mainWindow.setFullScreen(!mainWindow.isFullScreen())
+            },
+          },
+          {
+            label: 'Toggle Developer Tools',
+            accelerator: 'Alt+Command+I',
+            click: function() {
+              mainWindow.toggleDevTools()
+            },
+          },
+        ],
+      }
+    )
   }
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate))
