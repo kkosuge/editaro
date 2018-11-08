@@ -7,6 +7,7 @@ import {
   ipcMain,
   clipboard,
   shell,
+  Menu,
 } from 'electron'
 import * as path from 'path'
 import { format as formatUrl } from 'url'
@@ -65,6 +66,31 @@ function createMainWindow() {
     event.preventDefault()
     shell.openExternal(url)
   })
+
+  // Menus
+  const menuTemplate: any[] = []
+
+  if (process.platform === 'darwin') {
+    menuTemplate.push({
+      label: app.getName(),
+      submenu: [
+        {
+          label: 'Preferences',
+          accelerator: 'CmdOrCtrl+,',
+          click: () => {
+            if (mainWindow)
+              mainWindow.webContents.send('preferences')
+          }
+        }, {
+          type: 'separator'
+        }, {
+          role: 'quit'
+        }
+      ]
+    })
+  }
+
+  Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate))
 
   return window
 }

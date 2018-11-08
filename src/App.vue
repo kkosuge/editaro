@@ -8,6 +8,7 @@
     </div>
     <div class='nav-bar'>
       <div class='nav-bar-left'>
+        <div class='nav-bar-item vim-status-bar' v-show="sharedState.vimModeEnabled" ref="vimStatusBar"></div>
         <div class='nav-bar-item'>
           Characters: {{ this.textLength }}
         </div>
@@ -41,12 +42,13 @@
         </div>
       </div>
     </div>
+    <Preferences v-if="sharedState.showPreferences"></Preferences>
   </div>
 </template>
 
 <script lang="ts">
 import { ipcRenderer } from 'electron'
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import * as monaco from 'monaco-editor'
 import './lib/theme/dark'
 import './lib/theme/light'
@@ -56,8 +58,15 @@ import './lib/theme/light-grad'
 import themes from './lib/theme/themes'
 import languages from './lib/languages'
 import './assets/style.scss'
+import { initVimMode } from 'monaco-vim'
+import Preferences from './components/Preferences.vue'
+import store from './store'
 
-@Component
+@Component({
+  components: {
+    Preferences,
+  },
+})
 export default class App extends Vue {
   editor?: monaco.editor.IStandaloneCodeEditor
   editorModel?: monaco.editor.ITextModel
@@ -69,6 +78,7 @@ export default class App extends Vue {
   themes = themes
   lineCount = 1
   alwaysOnTop = false
+  vimMode?: any = null
 
   mounted() {
     this.loadLocalOptions()
@@ -93,6 +103,12 @@ export default class App extends Vue {
         ipcRenderer.send('copy', selectedText)
       }
       e.preventDefault()
+    })
+
+    this.updateVimMode(this.sharedState.vimModeEnabled)
+
+    ipcRenderer.on('preferences', () => {
+      store.commit('showPreferences', true)
     })
   }
 
@@ -152,6 +168,30 @@ export default class App extends Vue {
   toggleAlwaysOnTop() {
     this.alwaysOnTop = !this.alwaysOnTop
     ipcRenderer.send('alwaysOnTop', this.alwaysOnTop)
+  }
+
+  enableVimMode() {
+    if (!this.vimMode) {
+      const vimStatusBar = this.$refs.vimStatusBar as HTMLElement
+      vimStatusBar.innerHTML = ''
+      this.vimMode = initVimMode(this.editor!, vimStatusBar)
+    }
+  }
+
+  disableVimMode() {
+    if (this.vimMode) {
+      this.vimMode.dispose()
+      this.vimMode = null
+    }
+  }
+
+  @Watch('sharedState.vimModeEnabled')
+  updateVimMode(value: boolean) {
+    if (value) {
+      this.enableVimMode()
+    } else {
+      this.disableVimMode()
+    }
   }
 }
 </script>

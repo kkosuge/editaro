@@ -1,6 +1,8 @@
 @import "~pretty-checkbox/src/pretty-checkbox.scss";
 @import "./theme.scss";
 
+$title-bar-height: 22px;
+
 html,
 body {
   height: 100%;
@@ -24,7 +26,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  height: 22px;
+  height: $title-bar-height;
   width: 100%;
   -webkit-app-region: drag;
 }
@@ -107,5 +109,75 @@ body {
 
   .nav-bar-item-checkbox {
     margin-left: 12px;
+  }
+}
+
+.preferences {
+  position: fixed;
+  top: $title-bar-height;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1001;
+  font-size: 12px;
+  padding: 12px 24px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  h1 {
+    font-weight: 100;
+    font-size: 24px;
+    margin: 0 0 12px 0;
+  }
+}
+
+.close {
+  opacity: 0.6;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  position: relative;
+}
+
+.close:hover {
+  opacity: 1;
+}
+
+.close:before,
+.close:after {
+  position: absolute;
+  left: 15px;
+  content: ' ';
+  height: 33px;
+  width: 2px;
+  background-color: #333;
+}
+
+.close:before {
+  transform: rotate(45deg);
+}
+
+.close:after {
+  transform: rotate(-45deg);
+}
+
+.vim-status-bar {
+  white-space: nowrap;
+
+  > span {
+    margin-left: 2px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+
+  input[type="text"] {
+    background: transparent;
+    outline: 0;
+    border-style: none;
   }
 }
