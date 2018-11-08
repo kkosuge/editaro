@@ -18,13 +18,6 @@
       </div>
       <div class='nav-bar-right'>
         <div class='nav-bar-item nav-bar-item-select'>
-          <select v-model='theme' @change='changeTheme'>
-            <option v-for='theme in themes' :value='theme.value' :key='theme.value'>
-              {{ theme.text }}
-            </option>
-          </select>
-        </div>
-        <div class='nav-bar-item nav-bar-item-select'>
           <select v-model='language' @change='changeLanguage'>
             <option v-for='lang in languages' :value='lang.value' :key='lang.value'>
               {{ lang.text }}
@@ -60,7 +53,7 @@ import languages from './lib/languages'
 import './assets/style.scss'
 import { initVimMode } from 'monaco-vim'
 import Preferences from './components/Preferences.vue'
-import store from './store'
+import store, { SharedState } from './store'
 
 @Component({
   components: {
@@ -74,7 +67,6 @@ export default class App extends Vue {
   languages = languages
   language = 'markdown'
   textLength = 0
-  theme = 'dark-grad'
   themes = themes
   lineCount = 1
   alwaysOnTop = false
@@ -112,12 +104,11 @@ export default class App extends Vue {
     })
   }
 
-  loadLocalOptions() {
-    const localTheme = localStorage.getItem('theme')
-    if (localTheme) {
-      this.theme = localTheme
-    }
+  get theme(): SharedState['theme'] {
+    return this.sharedState.theme
+  }
 
+  loadLocalOptions() {
     const localLanguage = localStorage.getItem('language')
     if (localLanguage) {
       this.language = localLanguage
@@ -156,11 +147,6 @@ export default class App extends Vue {
     }
   }
 
-  changeTheme() {
-    monaco.editor.setTheme(this.theme)
-    localStorage.setItem('theme', this.theme)
-  }
-
   changeAlwaysOnTop() {
     ipcRenderer.send('alwaysOnTop', this.alwaysOnTop)
   }
@@ -192,6 +178,11 @@ export default class App extends Vue {
     } else {
       this.disableVimMode()
     }
+  }
+
+  @Watch('sharedState.theme')
+  updateTheme(value: string) {
+    monaco.editor.setTheme(this.theme)
   }
 }
 </script>
