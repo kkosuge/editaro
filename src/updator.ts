@@ -24,7 +24,7 @@ if (isProduction) {
     }
   })
 
-  const server = 'https://hazel-server-xxghwkeqyz.now.sh'
+  const server = 'https://hazel-server-ogznkeclkf.now.sh'
   const feed = `${server}/update/${process.platform}/${app.getVersion()}`
   autoUpdater.setFeedURL({ url: feed })
   autoUpdater.checkForUpdates()
