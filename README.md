@@ -1,7 +1,7 @@
-# dddraft
+# editaro
 
 チャットとかの下書き専用テキストエディタ  
-https://dddraft.kksg.net/
+https://editaro.kksg.net/
 
 ![](https://dddraft.kksg.net/dist/images/dddraft-image.png)
 
