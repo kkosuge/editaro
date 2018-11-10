@@ -4,17 +4,19 @@ import store from './store'
 
 Vue.config.productionTip = false
 
-store.load()
+store.persistedStore.load()
 
 Vue.mixin({
   data() {
     return {
-      sharedState: store.state,
+      persisted: store.persistedStore.state,
+      memory: store.memoryStore.state,
     }
   },
 })
 
-Vue.sharedState = store.state
+Vue.persisted = store.persistedStore.state
+Vue.memory = store.memoryStore.state
 
 new Vue({
   render: h => h(App),
@@ -22,10 +24,12 @@ new Vue({
 
 declare module 'vue/types/vue' {
   interface Vue {
-    sharedState: typeof store.state
+    persisted: typeof store.persistedStore.state
+    memory: typeof store.memoryStore.state
   }
 
   interface VueConstructor {
-    sharedState: typeof store.state
+    persisted: typeof store.persistedStore.state
+    memory: typeof store.memoryStore.state
   }
 }

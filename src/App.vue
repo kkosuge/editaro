@@ -1,5 +1,5 @@
 <template>
-  <div id='app' :class='`theme-${this.theme}`'>
+  <div id='app' :class='`theme-${this.persisted.theme}`'>
     <div class='draggable-title-bar'></div>
     <div class='main'>
       <div class='editor-wrapper'>
@@ -8,7 +8,7 @@
     </div>
     <div class='nav-bar'>
       <div class='nav-bar-left'>
-        <div class='nav-bar-item vim-status-bar' v-show="sharedState.vimModeEnabled" ref="vimStatusBar"></div>
+        <div class='nav-bar-item vim-status-bar' v-show="vimMode" ref="vimStatusBar"></div>
         <div class='nav-bar-item'>
           Characters: {{ this.textLength }}
         </div>
@@ -18,7 +18,7 @@
       </div>
       <div class='nav-bar-right'>
         <div class='nav-bar-item nav-bar-item-select'>
-          <select v-model='language' @change='changeLanguage'>
+          <select v-model='persisted.language'>
             <option v-for='lang in languages' :value='lang.value' :key='lang.value'>
               {{ lang.text }}
             </option>
@@ -35,7 +35,7 @@
         </div>
       </div>
     </div>
-    <Preferences v-if="sharedState.showPreferences"></Preferences>
+    <Preferences v-if="memory.showPreferences"></Preferences>
   </div>
 </template>
 
@@ -53,7 +53,7 @@ import languages from './lib/languages'
 import './assets/style.scss'
 import { initVimMode } from 'monaco-vim'
 import Preferences from './components/Preferences.vue'
-import store, { SharedState } from './store'
+import store, { IEditorMode } from './store'
 
 @Component({
   components: {
@@ -65,23 +65,21 @@ export default class App extends Vue {
   editorModel?: monaco.editor.ITextModel
   el?: HTMLElement
   languages = languages
-  language = 'markdown'
   textLength = 0
   themes = themes
   lineCount = 1
   alwaysOnTop = false
   vimMode?: any = null
+  _unwatch: any
 
   mounted() {
-    this.loadLocalOptions()
-    let defaultText = localStorage.getItem('text')
-    if (!defaultText) {
-      defaultText = ''
-    }
-
+    this._unwatch = store.persistedStore.watch(this, 'persisted')
     this.el = this.$refs.editor as HTMLElement
     this.editor = monaco.editor.create(this.el, this.defaultEditorOption())
-    this.editorModel = monaco.editor.createModel(defaultText, this.language)
+    this.editorModel = monaco.editor.createModel(
+      this.persisted.text,
+      this.persisted.language
+    )
     this.editor.setModel(this.editorModel)
     this.editor.focus()
 
@@ -97,32 +95,26 @@ export default class App extends Vue {
       e.preventDefault()
     })
 
-    this.updateVimMode(this.sharedState.vimModeEnabled)
-
-    ipcRenderer.on('preferences', () => {
-      store.commit('showPreferences', true)
+    ipcRenderer.on('showPreferences', () => {
+      this.memory.showPreferences = true
     })
+
+    this.updateEditorMode(this.persisted.editorMode)
+    this.persisted
   }
 
-  get theme(): SharedState['theme'] {
-    return this.sharedState.theme
-  }
-
-  loadLocalOptions() {
-    const localLanguage = localStorage.getItem('language')
-    if (localLanguage) {
-      this.language = localLanguage
-    }
+  beforeDestroy() {
+    this._unwatch()
   }
 
   defaultEditorOption(): monaco.editor.IEditorConstructionOptions {
     return {
-      theme: this.theme,
+      theme: this.persisted.theme,
       lineNumbers: 'off',
       automaticLayout: true,
       autoIndent: true,
       fontSize: 13,
-      language: this.language,
+      language: this.persisted.language,
       wordWrap: 'on',
       lineDecorationsWidth: 0,
       minimap: {
@@ -134,16 +126,9 @@ export default class App extends Vue {
   updateEditorModelData() {
     if (this.editorModel) {
       const text = this.editorModel.getValue()
-      localStorage.setItem('text', text)
+      this.persisted.text = text
       this.textLength = Array.from(text).length
       this.lineCount = this.editorModel.getLineCount()
-    }
-  }
-
-  changeLanguage() {
-    if (this.editorModel) {
-      monaco.editor.setModelLanguage(this.editorModel, this.language)
-      localStorage.setItem('language', this.language)
     }
   }
 
@@ -171,18 +156,25 @@ export default class App extends Vue {
     }
   }
 
-  @Watch('sharedState.vimModeEnabled')
-  updateVimMode(value: boolean) {
-    if (value) {
+  @Watch('persisted.editorMode')
+  updateEditorMode(value: IEditorMode) {
+    if (this.persisted.editorMode === 'vim') {
       this.enableVimMode()
     } else {
       this.disableVimMode()
     }
   }
 
-  @Watch('sharedState.theme')
+  @Watch('persisted.theme')
   updateTheme(value: string) {
-    monaco.editor.setTheme(this.theme)
+    monaco.editor.setTheme(this.persisted.theme)
+  }
+
+  @Watch('persisted.language')
+  updateLanguage(value: string) {
+    if (this.editorModel) {
+      monaco.editor.setModelLanguage(this.editorModel, this.persisted.language)
+    }
   }
 }
 </script>

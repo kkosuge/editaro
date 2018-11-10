@@ -79,7 +79,7 @@ function createMainWindow() {
             label: 'Preferences',
             accelerator: 'CmdOrCtrl+,',
             click: () => {
-              if (mainWindow) mainWindow.webContents.send('preferences')
+              if (mainWindow) mainWindow.webContents.send('showPreferences')
             },
           },
           {

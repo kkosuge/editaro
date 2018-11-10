@@ -4,17 +4,17 @@
       <h1>Preferences</h1>
       <a href="#" class="close" @click.prevent="close"></a>
     </div>
-    <div class="form-group">
-      <div class='pretty p-default p-curve'>
-        <input type='checkbox' id='vim-mode-checkbox' v-model='vimModeEnabled'>
-        <div class='state'>
-          <label for='vim-mode-checkbox'>Vim mode</label>
-        </div>
-      </div>
+    <div class="form-group select-group">
+      <label>Mode:</label>
+      <select v-model='persisted.editorMode'>
+        <option v-for='mode in editorModels' :value='mode.value' :key='mode.value'>
+          {{ mode.text }}
+        </option>
+      </select>
     </div>
     <div class="form-group select-group">
       <label>Theme:</label>
-      <select v-model='theme'>
+      <select v-model='persisted.theme'>
         <option v-for='theme in themes' :value='theme.value' :key='theme.value'>
           {{ theme.text }}
         </option>
@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import store, { SharedState } from '../store'
+import store, { IEditorMode } from '../store'
 import '../lib/theme/dark'
 import '../lib/theme/light'
 import '../lib/theme/vscode'
@@ -33,28 +33,27 @@ import '../lib/theme/dark-grad'
 import '../lib/theme/light-grad'
 import themes from '../lib/theme/themes'
 
+interface IEditorModes {
+  value: IEditorMode
+  text: string
+}
+
 @Component
 export default class extends Vue {
+  editorModels: IEditorModes[] = [
+    {
+      value: 'normal',
+      text: 'Normal',
+    },
+    {
+      value: 'vim',
+      text: 'Vim',
+    },
+  ]
   themes = themes
 
-  get vimModeEnabled(): SharedState['vimModeEnabled'] {
-    return this.sharedState.vimModeEnabled
-  }
-
-  set vimModeEnabled(value: SharedState['vimModeEnabled']) {
-    store.commit('vimModeEnabled', value, true)
-  }
-
-  get theme(): SharedState['theme'] {
-    return this.sharedState.theme
-  }
-
-  set theme(value: SharedState['theme']) {
-    store.commit('theme', value, true)
-  }
-
   close() {
-    store.commit('showPreferences', false)
+    this.memory.showPreferences = false
   }
 }
 </script>

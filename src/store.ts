@@ -1,51 +1,62 @@
-function get<T extends any>(key: string, defaultValue: T): T
-function get<T extends any>(key: string): T | undefined
-function get<T extends any>(key: string, defaultValue?: T): T | undefined {
-  try {
-    const item = localStorage.getItem(key)
-    if (item) {
-      return JSON.parse(item)
-    } else {
-      return defaultValue
-    }
-  } catch (err) {
-    return defaultValue
+import Vue from 'vue'
+
+export type IEditorMode = 'normal' | 'vim'
+
+export interface IMemoryStore {
+  state: {
+    showPreferences: boolean
   }
 }
 
-function set(key: string, value: any) {
-  localStorage.setItem(key, JSON.stringify(value))
+export interface persistedStore {
+  state: {
+    editorMode: IEditorMode
+    language: string
+    text: string
+    theme: string
+  }
+  load(): void
+  watch(vm: Vue, key: 'persisted'): any
 }
 
-export interface SharedState {
-  theme: string
-  vimModeEnabled: boolean
-  showPreferences: boolean
+const memoryStore: IMemoryStore = {
+  state: {
+    showPreferences: false,
+  },
 }
 
-const state: SharedState = {
-  theme: 'dark-grad',
-  vimModeEnabled: false,
-  showPreferences: false,
+const persistedStore: persistedStore = {
+  state: {
+    editorMode: 'normal',
+    language: 'markdown',
+    text: '',
+    theme: 'dark-grad',
+  },
+
+  load() {
+    const localState = localStorage.getItem('state')
+    if (localState) {
+      try {
+        this.state = { ...this.state, ...JSON.parse(localState) }
+      } catch (err) {
+        console.error(err)
+      }
+    }
+  },
+
+  watch(vm: Vue, key: 'persisted') {
+    return vm.$watch(
+      key,
+      value => {
+        console.log(JSON.stringify(value))
+        localStorage.setItem('state', JSON.stringify(value))
+      },
+      { deep: true }
+    )
+  },
 }
 
 export default {
-  state,
-
-  load() {
-    state.theme = get<string>('theme', state.theme)
-    state.vimModeEnabled = get<boolean>('vimModeEnabled', state.vimModeEnabled)
-  },
-
-  commit<K extends keyof SharedState>(
-    key: K,
-    value: SharedState[K],
-    persist: boolean = false
-  ) {
-    if (persist) {
-      set(key, value)
-    }
-
-    state[key] = value
-  },
+  memoryStore,
+  persistedStore,
 }
