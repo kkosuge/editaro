@@ -100,7 +100,16 @@ export default class App extends Vue {
     })
 
     this.updateEditorMode(this.persisted.editorMode)
-    this.persisted
+
+    window.addEventListener(
+      'keydown',
+      event => {
+        if (event.key === 'Escape') {
+          this.memory.showPreferences = false
+        }
+      },
+      true
+    )
   }
 
   beforeDestroy() {
