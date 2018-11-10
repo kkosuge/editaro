@@ -48,7 +48,6 @@ const persistedStore: persistedStore = {
     return vm.$watch(
       key,
       value => {
-        console.log(JSON.stringify(value))
         localStorage.setItem('state', JSON.stringify(value))
       },
       { deep: true }
