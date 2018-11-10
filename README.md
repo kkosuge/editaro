@@ -3,7 +3,7 @@
 チャットとか用の下書き専用テキストエディタ  
 https://editaro.com
 
-![editaro](https://editaro.com/dist/images/editaro-screenshot.png)
+![editaro](https://editaro.com/dist/images/editaro-screenshot.png?)
 
 ## develop || build || install
 
