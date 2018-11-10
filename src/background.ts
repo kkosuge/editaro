@@ -62,7 +62,6 @@ function createMainWindow() {
   }
 
   window.on('closed', () => {
-    console.log()
     mainWindow = null
   })
 
