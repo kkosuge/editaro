@@ -7,13 +7,13 @@ import {
   ipcMain,
   clipboard,
   shell,
-  Menu
+  Menu,
 } from 'electron'
 import * as path from 'path'
 import { format as formatUrl } from 'url'
 import {
   createProtocol,
-  installVueDevtools
+  installVueDevtools,
 } from 'vue-cli-plugin-electron-builder/lib'
 import './updator'
 
@@ -25,14 +25,20 @@ if (isDevelopment) {
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
 let mainWindow: any
 
+let position: number[]
+let size: number[]
+
 // Standard scheme must be registered before the app is ready
 protocol.registerStandardSchemes(['app'], { secure: true })
 function createMainWindow() {
+  if (!size) {
+    size = [600, 400]
+  }
   const window = new BrowserWindow({
-    width: 600,
-    height: 400,
+    width: size[0],
+    height: size[1],
     titleBarStyle: 'hidden',
-    alwaysOnTop: false
+    alwaysOnTop: false,
   })
 
   if (isDevelopment) {
@@ -46,12 +52,17 @@ function createMainWindow() {
       formatUrl({
         pathname: path.join(__dirname, 'index.html'),
         protocol: 'file',
-        slashes: true
+        slashes: true,
       })
     )
   }
 
+  if (position) {
+    window.setPosition(position[0], position[1])
+  }
+
   window.on('closed', () => {
+    console.log()
     mainWindow = null
   })
 
@@ -67,6 +78,14 @@ function createMainWindow() {
     shell.openExternal(url)
   })
 
+  window.on('move', () => {
+    position = window.getPosition()
+  })
+
+  window.on('resize', () => {
+    size = window.getSize()
+  })
+
   // Menus
   const menuTemplate: any[] = []
 
@@ -80,15 +99,15 @@ function createMainWindow() {
             accelerator: 'CmdOrCtrl+,',
             click: () => {
               if (mainWindow) mainWindow.webContents.send('showPreferences')
-            }
+            },
           },
           {
-            type: 'separator'
+            type: 'separator',
           },
           {
-            role: 'quit'
-          }
-        ]
+            role: 'quit',
+          },
+        ],
       },
       {
         label: 'View',
@@ -98,30 +117,30 @@ function createMainWindow() {
             accelerator: 'Command+R',
             click: function() {
               mainWindow.reload()
-            }
+            },
           },
           {
             label: 'Close',
             accelerator: 'Command+W',
             click: function() {
               mainWindow.close()
-            }
+            },
           },
           {
             label: 'Toggle Full Screen',
             accelerator: 'Ctrl+Command+F',
             click: function() {
               mainWindow.setFullScreen(!mainWindow.isFullScreen())
-            }
+            },
           },
           {
             label: 'Toggle Developer Tools',
             accelerator: 'Alt+Command+I',
             click: function() {
               mainWindow.toggleDevTools()
-            }
-          }
-        ]
+            },
+          },
+        ],
       }
     )
   }
