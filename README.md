@@ -1,9 +1,9 @@
-# editaro
+# エディ太郎
 
-チャットとかの下書き専用テキストエディタ  
-https://editaro.kksg.net/
+チャットとか用の下書き専用テキストエディタ  
+https://editaro.com
 
-![](https://dddraft.kksg.net/dist/images/dddraft-image.png)
+![editaro](https://editaro.com/dist/images/editaro-screenshot.png)
 
 ## develop || build || install
 
