@@ -8,7 +8,7 @@ export interface IMemoryStore {
   }
 }
 
-export interface persistedStore {
+export interface IPersistedStore {
   state: {
     editorMode: IEditorMode
     language: string
@@ -25,7 +25,7 @@ const memoryStore: IMemoryStore = {
   },
 }
 
-const persistedStore: persistedStore = {
+const persistedStore: IPersistedStore = {
   state: {
     editorMode: 'normal',
     language: 'markdown',
