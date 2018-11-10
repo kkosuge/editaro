@@ -122,6 +122,11 @@ body {
   font-size: 12px;
   padding: 12px 24px;
 
+  .preferences-inner {
+    height: 100%;
+    position: relative;
+  }
+
   .header {
     display: flex;
     justify-content: space-between;
@@ -131,6 +136,23 @@ body {
     font-weight: 100;
     font-size: 24px;
     margin: 0 0 12px 0;
+  }
+
+  .form-group {
+    margin-bottom: 10px;
+  }
+
+  .select-group {
+    label {
+      margin-right: 10px;
+    }
+  }
+
+  .app-version {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-size: 12px;
   }
 }
 
