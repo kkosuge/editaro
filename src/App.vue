@@ -75,7 +75,7 @@ export default class App extends Vue {
   mounted() {
     this._unwatch = store.persistedStore.watch(this, 'persisted')
     this.el = this.$refs.editor as HTMLElement
-    this.editor = monaco.editor.create(this.el, this.defaultEditorOption())
+    this.editor = monaco.editor.create(this.el, this.defaultEditorOptions())
     this.editorModel = monaco.editor.createModel(
       this.persisted.text,
       this.persisted.language
@@ -116,13 +116,13 @@ export default class App extends Vue {
     this._unwatch()
   }
 
-  defaultEditorOption(): monaco.editor.IEditorConstructionOptions {
+  defaultEditorOptions(): monaco.editor.IEditorConstructionOptions {
     return {
       theme: this.persisted.theme,
       lineNumbers: 'off',
       automaticLayout: true,
       autoIndent: true,
-      fontSize: 13,
+      fontSize: this.persisted.fontSize,
       language: this.persisted.language,
       wordWrap: 'on',
       lineDecorationsWidth: 0,
@@ -183,6 +183,13 @@ export default class App extends Vue {
   updateLanguage(value: string) {
     if (this.editorModel) {
       monaco.editor.setModelLanguage(this.editorModel, this.persisted.language)
+    }
+  }
+
+  @Watch('persisted.fontSize')
+  updateFontSize(value: number) {
+    if (this.editor) {
+      this.editor.updateOptions({ fontSize: this.persisted.fontSize })
     }
   }
 }

@@ -21,6 +21,14 @@
           </option>
         </select>
       </div>
+      <div class="form-group select-group">
+        <label>Font Size:</label>
+        <select v-model='persisted.fontSize'>
+          <option v-for='size in fontSizes' :value='size' :key='size'>
+            {{ size }}px
+          </option>
+        </select>
+      </div>
       <div class="app-version">エディ太郎: {{ appVersion }}</div>
     </div>
   </div>
@@ -28,6 +36,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import range from 'lodash/range'
 import store, { IEditorMode } from '../store'
 import '../lib/theme/dark'
 import '../lib/theme/light'
@@ -56,6 +65,7 @@ export default class extends Vue {
   ]
   themes = themes
   appVersion = remote.app.getVersion()
+  fontSizes: number[] = range(10, 101)
 
   close() {
     this.memory.showPreferences = false

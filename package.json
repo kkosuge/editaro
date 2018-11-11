@@ -11,6 +11,8 @@
     "serve:electron": "vue-cli-service serve:electron"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.118",
+    "lodash": "^4.17.11",
     "monaco-editor": "0.14.3",
     "monaco-vim": "^0.0.7",
     "node-sass": "^4.9.3",

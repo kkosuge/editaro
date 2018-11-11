@@ -11,6 +11,7 @@ export interface IMemoryStore {
 export interface IPersistedStore {
   state: {
     editorMode: IEditorMode
+    fontSize: number
     language: string
     text: string
     theme: string
@@ -28,6 +29,7 @@ const memoryStore: IMemoryStore = {
 const persistedStore: IPersistedStore = {
   state: {
     editorMode: 'normal',
+    fontSize: 13,
     language: 'markdown',
     text: '',
     theme: 'dark-grad',
