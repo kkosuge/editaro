@@ -140,6 +140,25 @@ function createMainWindow() {
             },
           },
         ],
+      },
+      {
+        label: 'Text',
+        submenu: [
+          {
+            label: 'Increase Font Size',
+            accelerator: 'Command+Plus',
+            click: function() {
+              if (mainWindow) mainWindow.webContents.send('increaseFontSize')
+            },
+          },
+          {
+            label: 'Decrease Font Size',
+            accelerator: 'Command+-',
+            click: function() {
+              if (mainWindow) mainWindow.webContents.send('decreaseFontSize')
+            },
+          },
+        ],
       }
     )
   }

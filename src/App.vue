@@ -104,6 +104,14 @@ export default class App extends Vue {
       this.memory.showPreferences = true
     })
 
+    ipcRenderer.on('increaseFontSize', () => {
+      this.persisted.fontSize += 1
+    })
+
+    ipcRenderer.on('decreaseFontSize', () => {
+      this.persisted.fontSize -= 1
+    })
+
     this.updateEditorMode(this.persisted.editorMode)
 
     window.addEventListener(
