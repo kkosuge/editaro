@@ -7,24 +7,32 @@
       </div>
       <div class="form-group select-group">
         <label>Mode:</label>
-        <select v-model='persisted.editorMode'>
-          <option v-for='mode in editorModels' :value='mode.value' :key='mode.value'>
+        <select v-model="persisted.editorMode">
+          <option
+            v-for="mode in editorModels"
+            :value="mode.value"
+            :key="mode.value"
+          >
             {{ mode.text }}
           </option>
         </select>
       </div>
       <div class="form-group select-group">
         <label>Theme:</label>
-        <select v-model='persisted.theme'>
-          <option v-for='theme in themes' :value='theme.value' :key='theme.value'>
+        <select v-model="persisted.theme">
+          <option
+            v-for="theme in themes"
+            :value="theme.value"
+            :key="theme.value"
+          >
             {{ theme.text }}
           </option>
         </select>
       </div>
       <div class="form-group select-group">
         <label>Font Size:</label>
-        <select v-model='persisted.fontSize'>
-          <option v-for='size in fontSizes' :value='size' :key='size'>
+        <select v-model="persisted.fontSize">
+          <option v-for="size in fontSizes" :value="size" :key="size">
             {{ size }}px
           </option>
         </select>
