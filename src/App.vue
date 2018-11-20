@@ -136,6 +136,7 @@ export default class App extends Vue {
       automaticLayout: true,
       autoIndent: true,
       fontSize: this.persisted.fontSize,
+      fontFamily: this.persisted.fontFamily,
       language: this.persisted.language,
       wordWrap: 'on',
       lineDecorationsWidth: 0,
@@ -203,6 +204,13 @@ export default class App extends Vue {
   updateFontSize(value: number) {
     if (this.editor) {
       this.editor.updateOptions({ fontSize: this.persisted.fontSize })
+    }
+  }
+
+  @Watch('persisted.fontFamily')
+  updateFontFamily(value: string) {
+    if (this.editor) {
+      this.editor.updateOptions({ fontFamily: this.persisted.fontFamily })
     }
   }
 }
