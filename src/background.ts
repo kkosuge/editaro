@@ -88,80 +88,78 @@ function createMainWindow() {
   // Menus
   const menuTemplate: any[] = []
 
-  if (process.platform === 'darwin') {
-    menuTemplate.push(
-      {
-        label: app.getName(),
-        submenu: [
-          {
-            label: 'Preferences',
-            accelerator: 'CmdOrCtrl+,',
-            click: () => {
-              if (mainWindow) mainWindow.webContents.send('showPreferences')
-            },
+  menuTemplate.push(
+    {
+      label: app.getName(),
+      submenu: [
+        {
+          label: 'Preferences',
+          accelerator: 'CmdOrCtrl+,',
+          click: () => {
+            if (mainWindow) mainWindow.webContents.send('showPreferences')
           },
-          {
-            type: 'separator',
+        },
+        {
+          type: 'separator',
+        },
+        {
+          role: 'quit',
+        },
+      ],
+    },
+    {
+      label: 'View',
+      submenu: [
+        {
+          label: 'Reload',
+          accelerator: 'CmdOrCtrl+R',
+          click: function() {
+            mainWindow.reload()
           },
-          {
-            role: 'quit',
+        },
+        {
+          label: 'Close',
+          accelerator: 'CmdOrCtrl+W',
+          click: function() {
+            mainWindow.close()
           },
-        ],
-      },
-      {
-        label: 'View',
-        submenu: [
-          {
-            label: 'Reload',
-            accelerator: 'Command+R',
-            click: function() {
-              mainWindow.reload()
-            },
+        },
+        {
+          label: 'Toggle Full Screen',
+          accelerator: process.platform === 'darwin' ? 'Ctrl+Command+F' : 'Alt+Ctrl+F',
+          click: function() {
+            mainWindow.setFullScreen(!mainWindow.isFullScreen())
           },
-          {
-            label: 'Close',
-            accelerator: 'Command+W',
-            click: function() {
-              mainWindow.close()
-            },
+        },
+        {
+          label: 'Toggle Developer Tools',
+          accelerator: 'Alt+CmdOrCtrl+I',
+          click: function() {
+            mainWindow.toggleDevTools()
           },
-          {
-            label: 'Toggle Full Screen',
-            accelerator: 'Ctrl+Command+F',
-            click: function() {
-              mainWindow.setFullScreen(!mainWindow.isFullScreen())
-            },
+        },
+      ],
+    },
+    {
+      label: 'Text',
+      submenu: [
+        {
+          label: 'Increase Font Size',
+          accelerator: 'CmdOrCtrl+Plus',
+          click: function() {
+            if (mainWindow) mainWindow.webContents.send('increaseFontSize')
           },
-          {
-            label: 'Toggle Developer Tools',
-            accelerator: 'Alt+Command+I',
-            click: function() {
-              mainWindow.toggleDevTools()
-            },
+        },
+        {
+          label: 'Decrease Font Size',
+          accelerator: 'CmdOrCtrl+-',
+          click: function() {
+            if (mainWindow) mainWindow.webContents.send('decreaseFontSize')
           },
-        ],
-      },
-      {
-        label: 'Text',
-        submenu: [
-          {
-            label: 'Increase Font Size',
-            accelerator: 'Command+Plus',
-            click: function() {
-              if (mainWindow) mainWindow.webContents.send('increaseFontSize')
-            },
-          },
-          {
-            label: 'Decrease Font Size',
-            accelerator: 'Command+-',
-            click: function() {
-              if (mainWindow) mainWindow.webContents.send('decreaseFontSize')
-            },
-          },
-        ],
-      }
-    )
-  }
+        },
+      ],
+    }
+  )
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate))
 
