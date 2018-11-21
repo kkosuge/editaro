@@ -37,6 +37,14 @@
           </option>
         </select>
       </div>
+      <div class="form-group select-group">
+        <label>Font Family:</label>
+        <select v-model="persisted.fontFamily">
+          <option v-for="font in fontFamilies" :value="font" :key="font">
+            {{ font }}
+          </option>
+        </select>
+      </div>
       <div class="app-version">エディ太郎: {{ appVersion }}</div>
     </div>
   </div>
@@ -53,6 +61,7 @@ import '../lib/theme/dark-grad'
 import '../lib/theme/light-grad'
 import themes from '../lib/theme/themes'
 import { remote } from 'electron'
+import fontFamilies from '../lib/fontFamilies'
 
 interface IEditorModes {
   value: IEditorMode
@@ -74,6 +83,7 @@ export default class extends Vue {
   themes = themes
   appVersion = remote.app.getVersion()
   fontSizes: number[] = range(10, 101)
+  fontFamilies = fontFamilies
 
   close() {
     this.memory.showPreferences = false
