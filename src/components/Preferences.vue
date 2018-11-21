@@ -40,8 +40,13 @@
       <div class="form-group select-group">
         <label>Font Family:</label>
         <select v-model="persisted.fontFamily">
-          <option v-for="font in fontFamilies" :value="font" :key="font">
-            {{ font }}
+          <option v-for="font in fontFamilies" :value="font.postscriptName" :key="`${font.postscriptName}-${font.path}`">
+            <span v-if="font.monospace">
+              等幅: {{ font.postscriptName }}
+            </span>
+            <span v-else>
+              {{ font.postscriptName }}
+            </span>
           </option>
         </select>
       </div>
