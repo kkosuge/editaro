@@ -40,14 +40,16 @@
       <div class="form-group select-group">
         <label>Font Family:</label>
         <select v-model="persisted.fontFamily">
-          <option v-for="font in fontFamilies" :value="font.postscriptName" :key="`${font.postscriptName}-${font.path}`">
-            <span v-if="font.monospace">
-              等幅: {{ font.postscriptName }}
-            </span>
-            <span v-else>
+          <optgroup label="等幅">
+            <option v-for="font in fontFamilies.filter(f => f.monospace)" :value="font.postscriptName" :key="`${font.postscriptName}-${font.path}`">
               {{ font.postscriptName }}
-            </span>
-          </option>
+            </option>
+          </optgroup>
+          <optgroup label="標準">
+            <option v-for="font in fontFamilies.filter(f => !f.monospace)" :value="font.postscriptName" :key="`${font.postscriptName}-${font.path}`">
+              {{ font.postscriptName }}
+            </option>
+          </optgroup>
         </select>
       </div>
       <div class="app-version">エディ太郎: {{ appVersion }}</div>
