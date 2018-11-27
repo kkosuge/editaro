@@ -126,14 +126,14 @@ function createMainWindow() {
         },
         {
           label: 'Toggle Full Screen',
-          accelerator: process.platform === 'darwin' ? 'Ctrl+Command+F' : 'Alt+Ctrl+F',
+          accelerator: process.platform === 'darwin' ? 'Ctrl+Command+F' : 'F11',
           click: function() {
             mainWindow.setFullScreen(!mainWindow.isFullScreen())
           },
         },
         {
           label: 'Toggle Developer Tools',
-          accelerator: 'Alt+CmdOrCtrl+I',
+          accelerator: process.platform === 'darwin' ? 'Alt+Cmd+I' : 'Ctrl+Shift+I',
           click: function() {
             mainWindow.toggleDevTools()
           },
