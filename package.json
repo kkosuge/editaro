@@ -46,5 +46,9 @@
     "linux": {
       "icon": "icons/png"
     }
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
   }
 }
