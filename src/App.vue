@@ -2,40 +2,29 @@
   <div id="app" :class="`theme-${this.persisted.theme}`">
     <div class="draggable-title-bar"></div>
     <div class="main">
-      <div class="editor-wrapper"><div id="editor" ref="editor"></div></div>
+      <div class="editor-wrapper">
+        <div id="editor" ref="editor"></div>
+      </div>
     </div>
     <div class="nav-bar">
       <div class="nav-bar-left">
-        <div
-          class="nav-bar-item vim-status-bar"
-          v-show="vimMode"
-          ref="vimStatusBar"
-        ></div>
+        <div class="nav-bar-item vim-status-bar" v-show="vimMode" ref="vimStatusBar"></div>
         <div class="nav-bar-item">Characters: {{ this.textLength }}</div>
         <div class="nav-bar-item">Lines: {{ this.lineCount }}</div>
       </div>
       <div class="nav-bar-right">
         <div class="nav-bar-item nav-bar-item-select">
           <select v-model="persisted.language">
-            <option
-              v-for="lang in languages"
-              :value="lang.value"
-              :key="lang.value"
-            >
-              {{ lang.text }}
-            </option>
+            <option v-for="lang in languages" :value="lang.value" :key="lang.value">{{ lang.text }}</option>
           </select>
         </div>
         <div class="nav-bar-item nav-bar-item-checkbox">
           <span @click="toggleAlwaysOnTop">Always on top:</span>
           <div class="pretty p-default p-curve">
-            <input
-              type="checkbox"
-              id="checkbox"
-              v-model="alwaysOnTop"
-              @change="changeAlwaysOnTop"
-            />
-            <div class="state"><label for="checkbox"></label></div>
+            <input type="checkbox" id="checkbox" v-model="alwaysOnTop" @change="changeAlwaysOnTop">
+            <div class="state">
+              <label for="checkbox"></label>
+            </div>
           </div>
         </div>
       </div>
@@ -130,13 +119,12 @@ export default class App extends Vue {
   }
 
   defaultEditorOptions(): monaco.editor.IEditorConstructionOptions {
-    return {
+    let options: monaco.editor.IEditorConstructionOptions = {
       theme: this.persisted.theme,
       lineNumbers: 'off',
       automaticLayout: true,
       autoIndent: true,
       fontSize: this.persisted.fontSize,
-      fontFamily: this.persisted.fontFamily,
       language: this.persisted.language,
       wordWrap: 'on',
       lineDecorationsWidth: 0,
@@ -144,6 +132,11 @@ export default class App extends Vue {
         enabled: false,
       },
     }
+
+    if (this.persisted.fontFamily.length) {
+      options.fontFamily = this.persisted.fontFamily
+    }
+    return options
   }
 
   updateEditorModelData() {
