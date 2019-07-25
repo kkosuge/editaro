@@ -114,28 +114,28 @@ function createMainWindow() {
           label: 'Reload',
           accelerator: 'CmdOrCtrl+R',
           click: function() {
-            mainWindow.reload()
+            if (mainWindow) mainWindow.reload()
           },
         },
         {
           label: 'Close',
           accelerator: 'CmdOrCtrl+W',
           click: function() {
-            mainWindow.close()
+            if (mainWindow) mainWindow.close()
           },
         },
         {
           label: 'Toggle Full Screen',
           accelerator: process.platform === 'darwin' ? 'Ctrl+Command+F' : 'F11',
           click: function() {
-            mainWindow.setFullScreen(!mainWindow.isFullScreen())
+            if (mainWindow) mainWindow.setFullScreen(!mainWindow.isFullScreen())
           },
         },
         {
           label: 'Toggle Developer Tools',
           accelerator: process.platform === 'darwin' ? 'Alt+Cmd+I' : 'Ctrl+Shift+I',
           click: function() {
-            mainWindow.toggleDevTools()
+            if (mainWindow) mainWindow.toggleDevTools()
           },
         },
       ],
