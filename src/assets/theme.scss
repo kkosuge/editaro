@@ -12,7 +12,9 @@ $theme-colors: (
     dark: #333,
     vscode: #0077d5,
     dark-grad: linear-gradient(to right, rgb(84, 51, 255), rgb(0, 171, 255), rgb(48, 217, 239)),
-    light-grad: linear-gradient(to right, rgb(84, 51, 255), rgb(0, 171, 255), rgb(48, 217, 239))
+    light-grad: linear-gradient(to right, rgb(84, 51, 255), rgb(0, 171, 255), rgb(48, 217, 239)),
+    aesthetic: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB),
+    editaro: linear-gradient(to right, #ea27ff, #0069ff)
   ),
   nav-bar-text: (
     light: #333,
@@ -36,6 +38,19 @@ $theme-colors: (
 
   @return map-get($map, $variant);
 }
+
+@keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
 
 .theme-light {
   .draggable-title-bar {
@@ -194,6 +209,147 @@ $theme-colors: (
 
     input {
       color: theme-color(nav-bar-text, dark);
+    }
+  }
+}
+
+.theme-aesthetic {
+  .draggable-title-bar {
+    background: theme-color(title-bar, dark);
+  }
+
+  .nav-bar {
+    color: theme-color(nav-bar-text, vscode);
+    background: theme-color(nav-bar, aesthetic);
+    border-top: 1px solid theme-color(border, dark);
+
+    select {
+      color: theme-color(nav-bar-text, vscode);
+    }
+  }
+
+  .preferences {
+    background-color: theme-color(preferences, dark);
+    color: theme-color(preferences-text, dark);
+  }
+
+  .close:before,
+  .close:after {
+    background-color: theme-color(preferences-text, dark);
+  }
+
+  .vim-status-bar {
+    color: theme-color(nav-bar-text, vscode);
+
+    input {
+      color: theme-color(nav-bar-text, vscode);
+    }
+  }
+}
+
+.theme-aesthetic-wave {
+  .draggable-title-bar {
+    background: theme-color(title-bar, dark);
+  }
+
+  .nav-bar {
+    color: theme-color(nav-bar-text, vscode);
+    background: theme-color(nav-bar, aesthetic);
+    border-top: 1px solid theme-color(border, dark);
+    animation: Gradient 10s ease infinite;
+    background-size: 400% 400%;
+
+    select {
+      color: theme-color(nav-bar-text, vscode);
+    }
+  }
+
+  .preferences {
+    background-color: theme-color(preferences, dark);
+    color: theme-color(preferences-text, dark);
+  }
+
+  .close:before,
+  .close:after {
+    background-color: theme-color(preferences-text, dark);
+  }
+
+  .vim-status-bar {
+    color: theme-color(nav-bar-text, vscode);
+
+    input {
+      color: theme-color(nav-bar-text, vscode);
+    }
+  }
+}
+
+
+.theme-editaro {
+  .draggable-title-bar {
+    background: theme-color(title-bar, dark);
+  }
+
+  .nav-bar {
+    color: theme-color(nav-bar-text, vscode);
+    background: theme-color(nav-bar, editaro);
+    border-top: 1px solid theme-color(border, dark);
+
+    select {
+      color: theme-color(nav-bar-text, vscode);
+    }
+  }
+
+  .preferences {
+    background-color: theme-color(preferences, dark);
+    color: theme-color(preferences-text, dark);
+  }
+
+  .close:before,
+  .close:after {
+    background-color: theme-color(preferences-text, dark);
+  }
+
+  .vim-status-bar {
+    color: theme-color(nav-bar-text, vscode);
+
+    input {
+      color: theme-color(nav-bar-text, vscode);
+    }
+  }
+}
+
+.theme-editaro-wave {
+  .draggable-title-bar {
+    background: theme-color(title-bar, dark);
+  }
+
+  .nav-bar {
+    color: theme-color(nav-bar-text, vscode);
+    background: theme-color(nav-bar, editaro);
+    border-top: 1px solid theme-color(border, dark);
+    animation: Gradient 10s ease infinite;
+    background-size: 400% 400%;
+
+    select {
+      color: theme-color(nav-bar-text, vscode);
+    }
+  }
+
+  .preferences {
+    background-color: theme-color(preferences, dark);
+    color: theme-color(preferences-text, dark);
+  }
+
+  .close:before,
+  .close:after {
+    background-color: theme-color(preferences-text, dark);
+  }
+
+  .vim-status-bar {
+    color: theme-color(nav-bar-text, vscode);
+
+    input {
+      color: theme-color(nav-bar-text, vscode);
     }
   }
 }

@@ -21,7 +21,7 @@
         <div class="nav-bar-item nav-bar-item-checkbox">
           <span @click="toggleAlwaysOnTop">Always on top:</span>
           <div class="pretty p-default p-curve">
-            <input type="checkbox" id="checkbox" v-model="alwaysOnTop" @change="changeAlwaysOnTop">
+            <input type="checkbox" id="checkbox" v-model="alwaysOnTop" @change="changeAlwaysOnTop" />
             <div class="state">
               <label for="checkbox"></label>
             </div>
@@ -37,11 +37,15 @@
 import { ipcRenderer } from 'electron'
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import * as monaco from 'monaco-editor'
+import './lib/theme/editaro'
+import './lib/theme/editaro-wave'
 import './lib/theme/dark'
 import './lib/theme/light'
 import './lib/theme/vscode'
 import './lib/theme/dark-grad'
 import './lib/theme/light-grad'
+import './lib/theme/aesthetic'
+import './lib/theme/aesthetic-wave'
 import themes from './lib/theme/themes'
 import languages from './lib/languages'
 import './assets/style.scss'

@@ -8,47 +8,37 @@
       <div class="form-group select-group">
         <label>Mode:</label>
         <select v-model="persisted.editorMode">
-          <option
-            v-for="mode in editorModels"
-            :value="mode.value"
-            :key="mode.value"
-          >
-            {{ mode.text }}
-          </option>
+          <option v-for="mode in editorModels" :value="mode.value" :key="mode.value">{{ mode.text }}</option>
         </select>
       </div>
       <div class="form-group select-group">
         <label>Theme:</label>
         <select v-model="persisted.theme">
-          <option
-            v-for="theme in themes"
-            :value="theme.value"
-            :key="theme.value"
-          >
-            {{ theme.text }}
-          </option>
+          <option v-for="theme in themes" :value="theme.value" :key="theme.value">{{ theme.text }}</option>
         </select>
       </div>
       <div class="form-group select-group">
         <label>Font Size:</label>
         <select v-model="persisted.fontSize">
-          <option v-for="size in fontSizes" :value="size" :key="size">
-            {{ size }}px
-          </option>
+          <option v-for="size in fontSizes" :value="size" :key="size">{{ size }}px</option>
         </select>
       </div>
       <div class="form-group select-group">
         <label>Font Family:</label>
         <select v-model="persisted.fontFamily">
           <optgroup label="等幅">
-            <option v-for="font in fontFamilies.filter(f => f.monospace)" :value="font.postscriptName" :key="`${font.postscriptName}-${font.path}`">
-              {{ font.postscriptName }}
-            </option>
+            <option
+              v-for="font in fontFamilies.filter(f => f.monospace)"
+              :value="font.postscriptName"
+              :key="`${font.postscriptName}-${font.path}`"
+            >{{ font.postscriptName }}</option>
           </optgroup>
           <optgroup label="標準">
-            <option v-for="font in fontFamilies.filter(f => !f.monospace)" :value="font.postscriptName" :key="`${font.postscriptName}-${font.path}`">
-              {{ font.postscriptName }}
-            </option>
+            <option
+              v-for="font in fontFamilies.filter(f => !f.monospace)"
+              :value="font.postscriptName"
+              :key="`${font.postscriptName}-${font.path}`"
+            >{{ font.postscriptName }}</option>
           </optgroup>
         </select>
       </div>
@@ -61,11 +51,15 @@
 import { Component, Vue } from 'vue-property-decorator'
 import range from 'lodash/range'
 import store, { IEditorMode } from '../store'
+import '../lib/theme/editaro'
+import '../lib/theme/editaro-wave'
 import '../lib/theme/dark'
 import '../lib/theme/light'
 import '../lib/theme/vscode'
 import '../lib/theme/dark-grad'
 import '../lib/theme/light-grad'
+import '../lib/theme/aesthetic'
+import '../lib/theme/aesthetic-wave'
 import themes from '../lib/theme/themes'
 import { remote } from 'electron'
 import fontFamilies from '../lib/fontFamilies'
