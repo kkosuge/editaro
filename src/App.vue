@@ -105,6 +105,11 @@ export default class App extends Vue {
       this.persisted.fontSize -= 1
     })
 
+    ipcRenderer.on('openCommandPalette', () => {
+      if (this.editor)
+        this.editor.trigger('App', 'editor.action.quickCommand', null)
+    })
+
     this.updateEditorMode(this.persisted.editorMode)
 
     window.addEventListener(

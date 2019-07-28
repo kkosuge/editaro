@@ -138,6 +138,13 @@ function createMainWindow() {
             if (mainWindow) mainWindow.toggleDevTools()
           },
         },
+        {
+          label: 'Open Command Palette',
+          accelerator: process.platform === 'darwin' ? 'Cmd+P' : 'Ctrl+P',
+          click: function() {
+            if (mainWindow) mainWindow.webContents.send('openCommandPalette')
+          },
+        },
       ],
     },
     {
