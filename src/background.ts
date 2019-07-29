@@ -140,7 +140,7 @@ function createMainWindow() {
         },
         {
           label: 'Open Command Palette',
-          accelerator: 'CmdOrCtrl+P',
+          accelerator: process.platform === 'darwin' ? 'Cmd+Shift+P' : 'Ctrl+Shift+P',
           click: function() {
             if (mainWindow) mainWindow.webContents.send('openCommandPalette')
           },
