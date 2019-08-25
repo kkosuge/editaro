@@ -13,6 +13,10 @@ body {
   background: #1e1e1e;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
