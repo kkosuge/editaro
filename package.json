@@ -5,7 +5,8 @@
   "scripts": {
     "lint": "vue-cli-service lint",
     "build:electron": "vue-cli-service build:electron",
-    "electron:build": "vue-cli-service electron:build --mac",
+    "electron:build:mac": "vue-cli-service electron:build --mac",
+    "electron:build:win": "vue-cli-service electron:build --win",
     "postinstall": "electron-builder install-app-deps",
     "electron:serve": "vue-cli-service electron:serve",
     "generate-icon": "electron-icon-generator src/assets/icon.png"
