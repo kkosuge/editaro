@@ -13,6 +13,7 @@ export interface IPersistedStore {
     editorMode: IEditorMode
     fontSize: number
     fontFamily: string
+    tabSize: number
     language: string
     text: string
     theme: string
@@ -32,6 +33,7 @@ const persistedStore: IPersistedStore = {
     editorMode: 'normal',
     fontSize: 13,
     fontFamily: '',
+    tabSize: 4,
     language: 'markdown',
     text: '',
     theme: 'dark-grad',
