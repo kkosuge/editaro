@@ -25,6 +25,7 @@ if (isDevelopment) {
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
 let mainWindow: any
 
+let isForceQuit: boolean
 let position: number[]
 let size: number[]
 
@@ -60,6 +61,13 @@ function createMainWindow() {
   if (position) {
     window.setPosition(position[0], position[1])
   }
+
+  window.on('close', event => {
+    if (!isForceQuit) {
+      event.preventDefault()
+      app.hide()
+    }
+  })
 
   window.on('closed', () => {
     mainWindow = null
@@ -181,8 +189,17 @@ app.on('window-all-closed', () => {
   }
 })
 
+app.on('before-quit', () => {
+  if (process.platform !== 'darwin') {
+    isForceQuit = true
+  }
+})
+
 app.on('activate', () => {
   // on macOS it is common to re-create a window even after all windows have been closed
+  if (process.platform === 'darwin') {
+    app.show()
+  }
   if (mainWindow === null) {
     mainWindow = createMainWindow()
   }
