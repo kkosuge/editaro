@@ -42,6 +42,12 @@
           </optgroup>
         </select>
       </div>
+      <div class="form-group select-group">
+        <label>Tab Size:</label>
+        <select v-model="persisted.tabSize">
+          <option v-for="size in tabSizes" :value="size" :key="size">{{ size }}</option>
+        </select>
+      </div>
       <div class="app-version">エディ太郎: {{ appVersion }}</div>
     </div>
   </div>
@@ -84,6 +90,7 @@ export default class extends Vue {
   themes = themes
   appVersion = remote.app.getVersion()
   fontSizes: number[] = range(10, 101)
+  tabSizes: number[] = range(1, 11)
   fontFamilies = fontFamilies
 
   close() {

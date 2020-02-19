@@ -215,5 +215,12 @@ export default class App extends Vue {
       this.editor.updateOptions({ fontFamily: this.persisted.fontFamily })
     }
   }
+
+  @Watch('persisted.tabSize')
+  updateTab(value: number) {
+    if (this.editorModel) {
+      this.editorModel.updateOptions({ tabSize: this.persisted.tabSize })
+    }
+  }
 }
 </script>
