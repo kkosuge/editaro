@@ -6,7 +6,7 @@ const languages = [
   { text: 'HTML', value: 'html' },
   { text: 'XML', value: 'xml' },
   { text: 'Dockerfile', value: 'dockerfile' },
-  { text: 'Javascript', value: 'javascript' },
+  { text: 'JavaScript', value: 'javascript' },
   { text: 'TypeScript', value: 'typescript' },
   { text: 'Ruby', value: 'ruby' },
   { text: 'Go', value: 'go' },
