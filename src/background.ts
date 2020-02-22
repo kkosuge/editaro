@@ -141,14 +141,16 @@ function createMainWindow() {
         },
         {
           label: 'Toggle Developer Tools',
-          accelerator: process.platform === 'darwin' ? 'Alt+Cmd+I' : 'Ctrl+Shift+I',
+          accelerator:
+            process.platform === 'darwin' ? 'Alt+Cmd+I' : 'Ctrl+Shift+I',
           click: function() {
             if (mainWindow) mainWindow.toggleDevTools()
           },
         },
         {
           label: 'Open Command Palette',
-          accelerator: process.platform === 'darwin' ? 'Cmd+Shift+P' : 'Ctrl+Shift+P',
+          accelerator:
+            process.platform === 'darwin' ? 'Cmd+Shift+P' : 'Ctrl+Shift+P',
           click: function() {
             if (mainWindow) mainWindow.webContents.send('openCommandPalette')
           },

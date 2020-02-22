@@ -8,20 +8,34 @@
     </div>
     <div class="nav-bar">
       <div class="nav-bar-left">
-        <div class="nav-bar-item vim-status-bar" v-show="vimMode" ref="vimStatusBar"></div>
+        <div
+          class="nav-bar-item vim-status-bar"
+          v-show="vimMode"
+          ref="vimStatusBar"
+        ></div>
         <div class="nav-bar-item">Characters: {{ this.textLength }}</div>
         <div class="nav-bar-item">Lines: {{ this.lineCount }}</div>
       </div>
       <div class="nav-bar-right">
         <div class="nav-bar-item nav-bar-item-select">
           <select v-model="persisted.language">
-            <option v-for="lang in languages" :value="lang.value" :key="lang.value">{{ lang.text }}</option>
+            <option
+              v-for="lang in languages"
+              :value="lang.value"
+              :key="lang.value"
+              >{{ lang.text }}</option
+            >
           </select>
         </div>
         <div class="nav-bar-item nav-bar-item-checkbox">
           <span @click="toggleAlwaysOnTop">Always on top:</span>
           <div class="pretty p-default p-curve">
-            <input type="checkbox" id="checkbox" v-model="alwaysOnTop" @change="changeAlwaysOnTop" />
+            <input
+              type="checkbox"
+              id="checkbox"
+              v-model="alwaysOnTop"
+              @change="changeAlwaysOnTop"
+            />
             <div class="state">
               <label for="checkbox"></label>
             </div>

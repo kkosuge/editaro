@@ -8,19 +8,31 @@
       <div class="form-group select-group">
         <label>Mode:</label>
         <select v-model="persisted.editorMode">
-          <option v-for="mode in editorModels" :value="mode.value" :key="mode.value">{{ mode.text }}</option>
+          <option
+            v-for="mode in editorModels"
+            :value="mode.value"
+            :key="mode.value"
+            >{{ mode.text }}</option
+          >
         </select>
       </div>
       <div class="form-group select-group">
         <label>Theme:</label>
         <select v-model="persisted.theme">
-          <option v-for="theme in themes" :value="theme.value" :key="theme.value">{{ theme.text }}</option>
+          <option
+            v-for="theme in themes"
+            :value="theme.value"
+            :key="theme.value"
+            >{{ theme.text }}</option
+          >
         </select>
       </div>
       <div class="form-group select-group">
         <label>Font Size:</label>
         <select v-model="persisted.fontSize">
-          <option v-for="size in fontSizes" :value="size" :key="size">{{ size }}px</option>
+          <option v-for="size in fontSizes" :value="size" :key="size"
+            >{{ size }}px</option
+          >
         </select>
       </div>
       <div class="form-group select-group">
@@ -31,21 +43,25 @@
               v-for="font in fontFamilies.filter(f => f.monospace)"
               :value="font.postscriptName"
               :key="`${font.postscriptName}-${font.path}`"
-            >{{ font.postscriptName }}</option>
+              >{{ font.postscriptName }}</option
+            >
           </optgroup>
           <optgroup label="標準">
             <option
               v-for="font in fontFamilies.filter(f => !f.monospace)"
               :value="font.postscriptName"
               :key="`${font.postscriptName}-${font.path}`"
-            >{{ font.postscriptName }}</option>
+              >{{ font.postscriptName }}</option
+            >
           </optgroup>
         </select>
       </div>
       <div class="form-group select-group">
         <label>Tab Size:</label>
         <select v-model="persisted.tabSize">
-          <option v-for="size in tabSizes" :value="size" :key="size">{{ size }}</option>
+          <option v-for="size in tabSizes" :value="size" :key="size">{{
+            size
+          }}</option>
         </select>
       </div>
       <div class="app-version">エディ太郎: {{ appVersion }}</div>
