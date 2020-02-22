@@ -25,7 +25,6 @@ if (isDevelopment) {
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
 let mainWindow: any
 
-let isForceQuit: boolean
 let position: number[]
 let size: number[]
 
@@ -61,13 +60,6 @@ function createMainWindow() {
   if (position) {
     window.setPosition(position[0], position[1])
   }
-
-  window.on('close', event => {
-    if (!isForceQuit) {
-      event.preventDefault()
-      app.hide()
-    }
-  })
 
   window.on('closed', () => {
     mainWindow = null
@@ -129,7 +121,7 @@ function createMainWindow() {
           label: 'Close',
           accelerator: 'CmdOrCtrl+W',
           click: function() {
-            if (mainWindow) mainWindow.close()
+            app.hide()
           },
         },
         {
@@ -188,12 +180,6 @@ app.on('window-all-closed', () => {
   // on macOS it is common for applications to stay open until the user explicitly quits
   if (process.platform !== 'darwin') {
     app.quit()
-  }
-})
-
-app.on('before-quit', () => {
-  if (process.platform !== 'darwin') {
-    isForceQuit = true
   }
 })
 
