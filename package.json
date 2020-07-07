@@ -31,7 +31,7 @@
     "@vue/cli-service": "^3.0.4",
     "@vue/eslint-config-prettier": "^3.0.4",
     "@vue/eslint-config-typescript": "^3.0.4",
-    "electron": "^2.0.2",
+    "electron": "^7.2.4",
     "electron-icon-generator": "^1.0.2",
     "typescript": "^3.0.0",
     "vue-cli-plugin-electron-builder": "^1.3.6",
