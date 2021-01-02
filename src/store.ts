@@ -17,6 +17,7 @@ export interface IPersistedStore {
     language: string
     text: string
     theme: string
+    quickSuggestions: boolean
   }
   load(): void
   watch(vm: Vue, key: 'persisted'): any
@@ -37,6 +38,7 @@ const persistedStore: IPersistedStore = {
     language: 'markdown',
     text: '',
     theme: 'dark-grad',
+    quickSuggestions: true,
   },
 
   load() {

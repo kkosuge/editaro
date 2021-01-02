@@ -154,6 +154,7 @@ export default class App extends Vue {
       minimap: {
         enabled: false,
       },
+      quickSuggestions: this.persisted.quickSuggestions,
     }
 
     if (this.persisted.fontFamily.length) {
@@ -234,6 +235,15 @@ export default class App extends Vue {
   updateTab(value: number) {
     if (this.editorModel) {
       this.editorModel.updateOptions({ tabSize: this.persisted.tabSize })
+    }
+  }
+
+  @Watch('persisted.quickSuggestions')
+  updateQuickSuggestions(value: boolean) {
+    if (this.editor) {
+      this.editor.updateOptions({
+        quickSuggestions: this.persisted.quickSuggestions,
+      })
     }
   }
 }
