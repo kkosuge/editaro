@@ -64,6 +64,14 @@
           }}</option>
         </select>
       </div>
+      <div class="form-group select-group">
+        <label>Quick Suggestions:</label>
+        <input
+          type="checkbox"
+          id="checkbox"
+          v-model="persisted.quickSuggestions"
+        />
+      </div>
       <div class="app-version">エディ太郎: {{ appVersion }}</div>
     </div>
   </div>
