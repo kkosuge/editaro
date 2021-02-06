@@ -93,6 +93,7 @@ export default class App extends Vue {
       this.persisted.language
     )
     this.editor.setModel(this.editorModel)
+    monaco.editor.setTheme(this.persisted.theme)
     this.editor.focus()
 
     this.updateEditorModelData()
@@ -101,8 +102,10 @@ export default class App extends Vue {
     document.addEventListener('copy', e => {
       if (this.editor && this.editorModel) {
         const editorSelection = this.editor.getSelection()
-        const selectedText = this.editorModel.getValueInRange(editorSelection)
-        ipcRenderer.send('copy', selectedText)
+        if (editorSelection) {
+          const selectedText = this.editorModel.getValueInRange(editorSelection)
+          ipcRenderer.send('copy', selectedText)
+        }
       }
       e.preventDefault()
     })
@@ -143,12 +146,10 @@ export default class App extends Vue {
 
   defaultEditorOptions(): monaco.editor.IEditorConstructionOptions {
     let options: monaco.editor.IEditorConstructionOptions = {
-      theme: this.persisted.theme,
       lineNumbers: 'off',
       automaticLayout: true,
-      autoIndent: true,
+      autoIndent: 'full',
       fontSize: this.persisted.fontSize,
-      language: this.persisted.language,
       wordWrap: 'on',
       lineDecorationsWidth: 0,
       minimap: {
