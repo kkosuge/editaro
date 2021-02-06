@@ -18,6 +18,7 @@ const languages = [
   { text: 'pgSQL', value: 'pgsql' },
   { text: 'PHP', value: 'php' },
   { text: 'PowerShell', value: 'powershell' },
+  { text: 'Rust', value: 'rust' },
 ]
 
 export default languages
