@@ -16,7 +16,7 @@
     "font-manager": "^0.3.1",
     "lodash": "^4.17.20",
     "monaco-editor": "^0.22.3",
-    "monaco-vim": "^0.1.10",
+    "monaco-vim": "^0.1.13",
     "node-sass": "^4.14.1",
     "pretty-checkbox": "^3.0.3",
     "sass-loader": "^7.3.1",
