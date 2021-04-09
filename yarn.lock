@@ -6156,10 +6156,10 @@ monaco-editor@^0.22.3:
   resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.22.3.tgz#69b42451d3116c6c08d9b8e052007ff891fd85d7"
   integrity sha512-RM559z2CJbczZ3k2b+ouacMINkAYWwRit4/vs0g2X/lkYefDiu0k2GmgWjAuiIpQi+AqASPOKvXNmYc8KUSvVQ==
 
-monaco-vim@^0.1.10:
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/monaco-vim/-/monaco-vim-0.1.10.tgz#f52a0b8509bbd61aae7f3e5f0bcb86d84a5a71b7"
-  integrity sha512-zynMVau4k5fgvTUB6fbxywSNupS93weSL7xpKl4Z0AMrIhNL4un1QaBOzfurLQI27DdtdFps4zxvl+B1A/h8/w==
+monaco-vim@^0.1.13:
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/monaco-vim/-/monaco-vim-0.1.13.tgz#b148698b199cbd0cf18820d73dd947859e92146d"
+  integrity sha512-nhl84Xk7dcqXiL+c1HlaGmlEscA0hm01yScY4gBd+5GejzWrX4oHhGYlwSDyKljoCyAMUYKvbkEQK7NENl1zkw==
 
 move-concurrently@^1.0.1:
   version "1.0.1"
