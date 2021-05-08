@@ -14,7 +14,7 @@
   "dependencies": {
     "@types/lodash": "^4.14.118",
     "font-manager": "^0.3.1",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "monaco-editor": "^0.22.3",
     "monaco-vim": "^0.1.13",
     "node-sass": "^4.14.1",
