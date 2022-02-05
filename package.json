@@ -1,51 +1,23 @@
 {
-  "name": "Editaro",
-  "version": "1.7.1",
-  "private": true,
+  "name": "editaro",
+  "version": "0.0.0",
   "scripts": {
-    "lint": "vue-cli-service lint",
-    "build:electron": "vue-cli-service build:electron",
-    "electron:build:mac": "vue-cli-service electron:build --mac",
-    "electron:build:win": "vue-cli-service electron:build --win",
-    "postinstall": "electron-builder install-app-deps",
-    "electron:serve": "vue-cli-service electron:serve",
-    "generate-icon": "electron-icon-generator src/assets/icon.png"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "tauri": "tauri"
   },
   "dependencies": {
-    "@types/lodash": "^4.14.118",
-    "font-manager": "^0.3.1",
-    "lodash": "^4.17.20",
-    "monaco-editor": "^0.22.3",
-    "monaco-vim": "^0.1.13",
-    "node-sass": "^4.14.1",
-    "pretty-checkbox": "^3.0.3",
-    "sass-loader": "^7.3.1",
-    "vue": "^2.6.12",
-    "vue-class-component": "^6.3.2",
-    "vue-property-decorator": "^7.3.0"
+    "@tauri-apps/api": "^1.0.0-beta.8",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.4",
-    "@vue/cli-plugin-eslint": "^3.0.4",
-    "@vue/cli-plugin-typescript": "^3.0.4",
-    "@vue/cli-service": "^3.0.4",
-    "@vue/eslint-config-prettier": "^3.0.4",
-    "@vue/eslint-config-typescript": "^3.0.4",
-    "electron": "^2.0.18",
-    "typescript": "^3.6.5",
-    "vue-cli-plugin-electron-builder": "^1.4.6",
-    "vue-template-compiler": "^2.5.22"
-  },
-  "main": "background.js",
-  "prettier": {
-    "semi": false,
-    "singleQuote": true
-  },
-  "engines": {
-    "node": "^12.0.0"
-  },
-  "volta": {
-    "node": "12.20.1",
-    "yarn": "1.22.10"
+    "@tauri-apps/cli": "^1.0.0-beta.10",
+    "@types/react": "^17.0.33",
+    "@types/react-dom": "^17.0.10",
+    "@vitejs/plugin-react": "^1.0.7",
+    "typescript": "^4.4.4",
+    "vite": "^2.7.2"
   }
 }
